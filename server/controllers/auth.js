@@ -1,4 +1,4 @@
-import bcryp from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
@@ -13,7 +13,6 @@ export const register = async (req, res) => {
             picturePath,
             friends,
             location,
-            birthDate,
         } = req.body;
 
         const salt = await bcrypt.genSalt();
@@ -27,7 +26,6 @@ export const register = async (req, res) => {
             picturePath,
             friends,
             location,
-            birthDate,
         });
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);

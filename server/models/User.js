@@ -28,14 +28,13 @@ const UserSchema = new mongoose.Schema(
         },
         picturePath: {
             type: String,
-            default: "",
+            default: "profile_icon.svg",
         },
         friends: {
             type: Array,
             default: []
         },
         location: String,
-        birthDate: Date,
     }, 
     { timestamps: true }
 );
