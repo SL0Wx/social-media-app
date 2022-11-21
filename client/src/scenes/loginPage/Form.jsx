@@ -19,17 +19,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Galaxy from "components/Galaxy";
 
 const registerSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
-    location: yup.string().required("required"),
-    picture: yup.string().required("required"),
+    firstName: yup.string().required("Pole wymagane"),
+    lastName: yup.string().required("Pole wymagane"),
+    email: yup.string().email("invalid email").required("Pole wymagane"),
+    password: yup.string().required("Pole wymagane"),
+    location: yup.string().required("Pole wymagane"),
+    picture: yup.string().required("Pole wymagane"),
 });
 
 const loginSchema = yup.object().shape({
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
+    email: yup.string().email("Niepoprawny email").required("Pole wymagane"),
+    password: yup.string().required("Pole wymagane"),
 });
 
 const initialValuesRegister = {
@@ -110,149 +110,232 @@ const Form = () => {
 
     return (
         <>
-            <Box width="100%" backgroundColor={palette.background.alt} p="0.5rem 6%" textAlign="center">
-                <FlexBetween maxWidth="1440px" margin="0 auto">
-                    <img src="/assets/sfera_logo.svg" height="50px" onClick={() => { setPageType("welcome"); }}/>
+            <Box width="100%" backgroundColor={palette.primary.nav} p="0.5rem 6%" textAlign="center" className="headerNav">
+                <FlexBetween maxWidth="1350px" margin="0 auto">
+                    <img className="logoImg" src="/assets/sfera_logo.svg" height="50px" onClick={() => { setPageType("welcome"); }}/>
                     <Box>
-                        <button className="login" onClick={() => { setPageType("login"); formikRef.current?.resetForm()}}>ZALOGUJ SIĘ</button>
-                        <button className="register" onClick={() => { setPageType("register"); formikRef.current?.resetForm()}}>ZAREJESTRUJ SIĘ</button>
+                        <button className="login" onClick={ () => { setPageType("login"); formikRef.current?.resetForm(); }}>ZALOGUJ SIĘ</button>
+                        <button className="register" onClick={() => { setPageType("register"); formikRef.current?.resetForm(); }}>ZAREJESTRUJ SIĘ</button>
                     </Box>
                 </FlexBetween>
             </Box>
-            <Box width="100%">
+            <Box width="100%" backgroundColor={isWelcome ? palette.background.default : (isLogin ? palette.background.default : palette.primary.main)}>
+            <AnimatePresence exitBeforeEnter>
                 {!isWelcome ? (
-                    <Box width={isNonMobileScreens ? "50%" : "93%"} p="2rem" m="2rem auto" borderRadius="1.5rem" backgroundColor={palette.background.alt}>
-                        <Formik innerRef={formikRef} onSubmit={handleFormSubmit} initialValues={isLogin ? initialValuesLogin : initialValuesRegister} validationSchema={isLogin ? loginSchema : registerSchema}>
-                        {({
-                            values,
-                            errors,
-                            touched,
-                            handleBlur,
-                            handleChange,
-                            handleSubmit,
-                            setFieldValue,
-                            resetForm,
-                        }) => (
-                            <form onSubmit={handleSubmit}>
-                                <Box display="grid" gap="30px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{"& > div": { gridColumn: isNonMobile ? undefined : "span 4"}}}>
-                                    {isRegister && (
-                                        <>
-                                            <TextField 
-                                                label="First Name" 
-                                                onBlur={handleBlur} 
-                                                onChange={handleChange} 
-                                                value={values.firstName} 
-                                                name="firstName"
-                                                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                                helperText={touched.firstName && errors.firstName}
-                                                sx={{ gridColumn: "span 4"}}
-                                            />
-                                            <TextField 
-                                                label="Last Name" 
-                                                onBlur={handleBlur} 
-                                                onChange={handleChange} 
-                                                value={values.lastName} 
-                                                name="lastName"
-                                                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                                helperText={touched.lastName && errors.lastName}
-                                                sx={{ gridColumn: "span 4"}}
-                                            />
-                                            <TextField 
-                                                label="Location" 
-                                                onBlur={handleBlur} 
-                                                onChange={handleChange} 
-                                                value={values.location} 
-                                                name="location"
-                                                error={Boolean(touched.location) && Boolean(errors.location)}
-                                                helperText={touched.location && errors.location}
-                                                sx={{ gridColumn: "span 4"}}
-                                            />
-                                            <Box gridColumn="span 4" border={`1px solid ${palette.neutral.medium}`} borderRadius="5px" p="1rem">
-                                                <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false} 
-                                                    onDrop={(acceptedFiles) =>
-                                                        setFieldValue("picture", acceptedFiles[0])
-                                                    }
-                                                >
-                                                {({ getRootProps, getInputProps }) => (
-                                                    <Box {...getRootProps()} border={`2px dashed ${palette.primary.main}`} p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}>
-                                                        <input {...getInputProps()} />
-                                                        {!values.picture ? (
-                                                            <p>Add picture Here</p>
-                                                        ) : (
-                                                            <FlexBetween>
-                                                                <Typography>{values.picture.name}</Typography>
-                                                                <EditOutlinedIcon />
-                                                            </FlexBetween>
-                                                        )}
-                                                    </Box>
-                                                )}
-                                                </Dropzone>
-                                            </Box>
-                                        </>
-                                    )}
+                    <motion.div key="forms" initial="pageDefault" animate="pageAnimate" exit="pageExit" variants={{
+                        pageDefault: {
+                          opacity: 0
+                        },
+                        pageAnimate: {
+                          opacity: 1
+                        },
+                        pageExit: {
+                          opacity: 0,
+                          transition: {
+                            duration: .5,
+                            delay: .15
+                          }
+                        }
+                      }}>
+                    <Box height="100vh" pt="75px">
+                        <Box  className="inputWrap" width={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : "93%"} height={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : "93%"} p="2rem" m="0 auto" borderRadius="50%" backgroundColor={isLogin ? palette.primary.main : palette.background.default}>
+                            <Formik innerRef={formikRef} onSubmit={handleFormSubmit} initialValues={isLogin ? initialValuesLogin : initialValuesRegister} validationSchema={isLogin ? loginSchema : registerSchema}>
+                            {({
+                                values,
+                                errors,
+                                touched,
+                                handleBlur,
+                                handleChange,
+                                handleSubmit,
+                                setFieldValue,
+                                resetForm,
+                            }) => (
+                                <form onSubmit={handleSubmit}>
+                                    <h2 className={isLogin ? "headerWhite" : "headerBlack"}>{isLogin ? "LOGOWANIE" : "REJESTRACJA"}</h2>
+                                    <Box className="inputWrap" display="grid" gap="10px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{"& > div": { gridColumn: isNonMobile ? undefined : "span 4"}}}>
+                                        {isRegister && (
+                                            <>   
+                                                <TextField 
+                                                    className={isLogin ? "inputLogField" : "inputRedField"}
+                                                    label="Imię" 
+                                                    onBlur={handleBlur} 
+                                                    onChange={handleChange} 
+                                                    value={values.firstName} 
+                                                    name="firstName"
+                                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                                    helperText={touched.firstName && errors.firstName}
+                                                    size="small"
+                                                    sx={{ gridColumn: "span 4",
+                                                    "& .MuiOutlinedInput-root": {
+                                                    "& > fieldset": { borderColor: "#212121" },
+                                                    },}}
+                                                    InputProps={{
+                                                        style: {
+                                                            backgroundColor: "white",
+                                                            borderRadius: "8px",
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        style: { color: '#212121'},
+                                                    }}
+                                                />
+                                                <TextField 
+                                                    className="inputField"
+                                                    label="Nazwisko" 
+                                                    onBlur={handleBlur} 
+                                                    onChange={handleChange} 
+                                                    value={values.lastName} 
+                                                    name="lastName"
+                                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                                                    helperText={touched.lastName && errors.lastName}
+                                                    size="small"
+                                                    sx={{ gridColumn: "span 4",
+                                                    "& .MuiOutlinedInput-root": {
+                                                    "& > fieldset": { borderColor: "#212121" },
+                                                    },}}
+                                                    InputProps={{
+                                                        style: {
+                                                            backgroundColor: "white",
+                                                            borderRadius: "8px",
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        style: { color: '#212121'},
+                                                    }}
+                                                />
+                                                <TextField 
+                                                    className="inputField"
+                                                    label="Miejscowość" 
+                                                    onBlur={handleBlur} 
+                                                    onChange={handleChange} 
+                                                    value={values.location} 
+                                                    name="location"
+                                                    error={Boolean(touched.location) && Boolean(errors.location)}
+                                                    helperText={touched.location && errors.location}
+                                                    size="small"
+                                                    sx={{ gridColumn: "span 4",
+                                                    "& .MuiOutlinedInput-root": {
+                                                    "& > fieldset": { borderColor: "#212121" },
+                                                    },}}
+                                                    InputProps={{
+                                                        style: {
+                                                            backgroundColor: "white",
+                                                            borderRadius: "8px",
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        style: { color: '#212121'},
+                                                    }}
+                                                />
+                                                <Box gridColumn="span 4" border={`1px solid #212121`} borderRadius="5px" p="1rem" className="inputField" backgroundColor="white">
+                                                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false} 
+                                                        onDrop={(acceptedFiles) =>
+                                                            setFieldValue("picture", acceptedFiles[0])
+                                                        }
+                                                    >
+                                                    {({ getRootProps, getInputProps }) => (
+                                                        <Box {...getRootProps()} border={`2px dashed ${palette.primary.main}`} p="0.1rem" textAlign="center" sx={{ "&:hover": { cursor: "pointer" } }}>
+                                                            <input {...getInputProps()} />
+                                                            {!values.picture ? (
+                                                                <p>Dodaj swoje zdjęcie</p>
+                                                            ) : (
+                                                                <FlexBetween>
+                                                                    <Typography>{values.picture.name}</Typography>
+                                                                    <EditOutlinedIcon />
+                                                                </FlexBetween>
+                                                            )}
+                                                        </Box>
+                                                    )}
+                                                    </Dropzone>
+                                                </Box>
+                                            </>
+                                        )}
 
-                                    <TextField 
-                                        label="Email" 
-                                        onBlur={handleBlur} 
-                                        onChange={handleChange} 
-                                        value={values.email} 
-                                        name="email"
-                                        error={Boolean(touched.email) && Boolean(errors.email)}
-                                        helperText={touched.email && errors.email}
-                                        sx={{ gridColumn: "span 4"}}
-                                    />
-                                    <TextField 
-                                        label="Password" 
-                                        type="password"
-                                        onBlur={handleBlur} 
-                                        onChange={handleChange} 
-                                        value={values.password} 
-                                        name="password"
-                                        error={Boolean(touched.password) && Boolean(errors.password)}
-                                        helperText={touched.password && errors.password}
-                                        sx={{ gridColumn: "span 4"}}
-                                    />
-                                </Box>
+                                        <TextField 
+                                            className="inputField"
+                                            label="Email" 
+                                            onBlur={handleBlur} 
+                                            onChange={handleChange} 
+                                            value={values.email} 
+                                            name="email"
+                                            error={Boolean(touched.email) && Boolean(errors.email)}
+                                            helperText={touched.email && errors.email}
+                                            size="small"
+                                            sx={{ gridColumn: "span 4",
+                                            "& .MuiOutlinedInput-root": {
+                                              "& > fieldset": { borderColor: "#212121" },
+                                            },}}
+                                            InputProps={{
+                                                style: {
+                                                    backgroundColor: "white",
+                                                    borderRadius: "8px",
+                                                }
+                                            }}
+                                            InputLabelProps={{
+                                                style: { color: '#212121'},
+                                            }}
+                                        />
+                                        <TextField 
+                                            className="inputField"
+                                            label="Hasło" 
+                                            type="password"
+                                            onBlur={handleBlur} 
+                                            onChange={handleChange} 
+                                            value={values.password} 
+                                            name="password"
+                                            error={Boolean(touched.password) && Boolean(errors.password)}
+                                            helperText={touched.password && errors.password}
+                                            size="small"
+                                            sx={{ gridColumn: "span 4",
+                                            "& .MuiOutlinedInput-root": {
+                                              "& > fieldset": { borderColor: "#212121" },
+                                            },}}
+                                            InputProps={{
+                                                style: {
+                                                    backgroundColor: "white",
+                                                    borderRadius: "8px",
+                                                }
+                                            }}
+                                            InputLabelProps={{
+                                                style: { color: '#212121'},
+                                            }}
+                                        />
+                                    </Box>
 
-                                {/* BUTTONS */}
-                                <Box>
-                                    <Button fullWidth type="submit" 
-                                        sx={{
-                                            m: "2rem 0",
-                                            p: "1rem",
-                                            backgroundColor: palette.primary.main,
-                                            color: palette.background.alt,
-                                            "&:hover": { color: palette.primary.main },
-                                        }}
-                                    >
-                                        {isLogin ? "LOGIN" : "REGISTER"}
-                                    </Button>
-                                    <Typography onClick={() => {
-                                            setPageType(isLogin ? "register" : "login");
-                                            resetForm();
-                                        }}
-                                        sx={{
-                                            textDecoration: "underline",
-                                            color: palette.primary.main,
-                                            "&:hover": {
-                                                cursor: "pointer",
-                                                color: palette.primary.light,
-                                            },
-                                        }}
-                                    >
-                                        {isLogin ? "Don't have an account? Sign Up here." : "Already have an account? Login here."}
-                                    </Typography>
-                                </Box>
-                            </form>
-                        )}
-                    </Formik>
+                                    {/* BUTTONS */}
+                                    <Box className="buttonField">
+                                        <Button fullWidth type="submit" 
+                                            sx={{
+                                                m: "1rem 0",
+                                                p: "0.75rem",
+                                                fontSize: "1.1rem",
+                                                backgroundColor: isLogin ? palette.background.alt : palette.primary.main,
+                                                color: isLogin ? palette.primary.main : palette.background.alt,
+                                                border: "2px solid transparent",
+                                                "&:hover": { color: isLogin ? palette.background.alt : palette.primary.main, border: isLogin ? `2px solid ${palette.background.alt}` : `2px solid ${palette.primary.main}`},
+                                            }}
+                                        >
+                                            {isLogin ? "ZALOGUJ SIĘ" : "ZAREJESTRUJ SIĘ"}
+                                        </Button>
+                                    </Box>
+                                </form>
+                            )}
+                        </Formik>
+                    </Box>
                 </Box>
+                </motion.div>
                 ) : (
                     <Box>
-                        <AnimatePresence exitBeforeEnter>
-                            <motion.div initial="pageDefault" animate="pageAnimate" exit="pageExit" variants={{
-                                pageExit: {
+                        <motion.div key={"welcome"} initial="hidden" exit="visible" variants={{
+                                visible: {
                                     scale: 25,
+                                    background: "transparent",
+                                    transition: {
+                                    duration: 0.8
+                                    }
+                                },
+                                exit: {
+                                    scale: 1,
                                     transition: {
                                     duration: 0.8
                                     }
@@ -300,10 +383,10 @@ const Form = () => {
                                     </motion.div>
                                 </div>
                             </div> 
-                            </motion.div>
-                        </AnimatePresence> 
+                        </motion.div>
                     </Box>
                 )}
+            </AnimatePresence>
             </Box>
         </>
     )

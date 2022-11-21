@@ -25,6 +25,7 @@ export const colorTokens = {
       700: "#006B7D",
       800: "#6284FF",
       900: "#001519",
+      1000: "#D2DCFF",
     },
 };
 
@@ -59,6 +60,7 @@ export const colorTokens = {
                 dark: colorTokens.primary[700],
                 main: colorTokens.primary[500],
                 light: colorTokens.primary[50],
+                nav: colorTokens.primary[1000],
               },
               neutral: {
                 dark: colorTokens.grey[700],
