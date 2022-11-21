@@ -56,7 +56,6 @@ const Navbar = () => {
             },
           }}
         >
-          Sfera
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
