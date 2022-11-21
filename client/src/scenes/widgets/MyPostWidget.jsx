@@ -52,7 +52,7 @@ const MyPostWidget = ({ picturePath }) => {
         <WidgetWrapper>
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
-                <InputBase placeholder="What's on your mind..." onChange={(e) => setPost(e.target.value)} value={post}
+                <InputBase placeholder="Co ci chodzi po głowie?" onChange={(e) => setPost(e.target.value)} value={post}
                     sx={{
                         width: "100%",
                         backgroundColor: palette.neutral.light,
@@ -94,15 +94,16 @@ const MyPostWidget = ({ picturePath }) => {
             <FlexBetween>
                 <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
                     <ImageOutlined sx={{ color: mediumMain }} />
-                    <Typography color={palette.primary.dark} sx={{ "&:hover": { cursor: "pointer", color: palette.primary.dark } }}>Image</Typography>
+                    <Typography color={palette.primary.dark} sx={{ "&:hover": { cursor: "pointer", color: palette.primary.dark } }}>Zdjęcie</Typography>
                 </FlexBetween>
                 <Button disabled={!post} onClick={handlePost}
                     sx={{
-                        color: palette.primary.dark, 
+                        color: palette.primary.light, 
                         backgroundColor: palette.primary.main, 
-                        borderRadius: "3rem"
+                        borderRadius: "3rem",
+                        "&:hover": { color: palette.primary.main }
                     }}>
-                    POST
+                    Wyślij w eter
                 </Button>
             </FlexBetween>
         </WidgetWrapper>

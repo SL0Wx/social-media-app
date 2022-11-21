@@ -64,7 +64,7 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
+            <InputBase placeholder="Wyszukaj..." />
             <IconButton>
               <Search />
             </IconButton>
@@ -105,7 +105,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Wyloguj się</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -180,7 +180,7 @@ const Navbar = () => {
                   <Typography>{fullName}</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
+                  Wyloguj się
                 </MenuItem>
               </Select>
             </FormControl>

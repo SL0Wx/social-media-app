@@ -62,7 +62,7 @@ const UserWidget = ({ userId, picturePath }) => {
                         onClick={() => navigate(`/profile/${userId}`)}>
                             {firstName} {lastName}
                         </Typography>
-                        <Typography color={medium}>{friends.length} friends</Typography>
+                        <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
                     </Box>
                 </FlexBetween>
                 <ManageAccountsOutlined />
