@@ -247,3 +247,23 @@ form h2 {
   position: sticky;
   z-index: 100;
 }
+
+#AsteroidsWrap {
+  position: absolute;
+  width: 1200px;
+  height: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -200px;
+  left: 0;
+  right: 0;
+  animation: rotate 60s infinite linear reverse;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#AsteroidsWrap g path {
+  animation: rotate 30s infinite linear;
+  transform-origin: center;
+  transform-box: fill-box;
+}
