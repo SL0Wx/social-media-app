@@ -1,6 +1,8 @@
 import React from "react";
+import { useTheme } from "@mui/material";
 
 function Galaxy() {
+  const mode = (useTheme().palette.mode === 'dark');
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -87,8 +89,7 @@ function Galaxy() {
             cx="745.218"
             cy="758.502"
             r="160.214"
-            fill="#fff"
-            fillOpacity="0.5"
+            fill={ mode ? "#ECF0FF" : "#F2F5FF"}
           ></circle>
           <circle
             id="Beam"
@@ -141,7 +142,7 @@ function Galaxy() {
           gradientTransform="matrix(648.475 0 0 619.424 1150.2 879.378)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.41" stopColor="#DEE5FF"></stop>
+          <stop offset="0.41" stopColor={ mode ? "#984BE4" : "#DEE5FF"}></stop>
           <stop offset="1" stopColor="#6284FF"></stop>
         </radialGradient>
         <radialGradient

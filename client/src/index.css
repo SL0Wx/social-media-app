@@ -58,7 +58,6 @@ body {
 }
 
 .main {
-  background: #C6D2FF;
   height: 100vh;
   width: 100%;
   transition: 1s;
@@ -248,7 +247,7 @@ form h2 {
   z-index: 100;
 }
 
-#AsteroidsWrap {
+#AsteroidsWrapLog {
   position: absolute;
   width: 1200px;
   height: 1200px;
@@ -262,8 +261,29 @@ form h2 {
   transform-box: fill-box;
 }
 
-#AsteroidsWrap g path {
+#AsteroidsWrapReg {
+  position: absolute;
+  width: 1400px;
+  height: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -250px;
+  left: 0;
+  right: 0;
+  animation: rotate 60s infinite linear reverse;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#AsteroidsWrapLog g path {
   animation: rotate 30s infinite linear;
   transform-origin: center;
   transform-box: fill-box;
+}
+
+#AsteroidsWrapReg g path {
+  animation: rotate 30s infinite linear;
+  transform-origin: center;
+  transform-box: fill-box;
+  fill: #B2C3FF;
 }

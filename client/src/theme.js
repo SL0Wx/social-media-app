@@ -10,8 +10,10 @@ export const colorTokens = {
       500: "#666666",
       600: "#4D4D4D",
       700: "#333333",
+      750: "#292929",
       800: "#1A1A1A",
-      900: "#0A0A0A",
+      850: "#212121",
+      900: "#191919",
       1000: "#000000",
     },
     primary: {
@@ -41,6 +43,7 @@ export const colorTokens = {
                 dark: colorTokens.primary[200],
                 main: colorTokens.primary[500],
                 light: colorTokens.primary[800],
+                nav: colorTokens.grey[850],
               },
               neutral: {
                 dark: colorTokens.grey[100],
@@ -51,7 +54,7 @@ export const colorTokens = {
               },
               background: {
                 default: colorTokens.grey[900],
-                alt: colorTokens.grey[800],
+                alt: colorTokens.grey[750],
               },
             }
           : {
