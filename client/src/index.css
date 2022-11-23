@@ -203,12 +203,8 @@ footer {
   justify-content: center;
 }
 
-.inputLogField {
-  padding: 8.5px 14px;
-  width: 300px;
-  color: white;
-  border: 3px solid white !important;
-  margin: 0 auto !important;
+.css-myb2s4-MuiInputBase-input-MuiOutlinedInput-input {
+  color: black !important;
 }
 
 .inputRegField {

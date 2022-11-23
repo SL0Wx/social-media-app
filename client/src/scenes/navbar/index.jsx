@@ -24,13 +24,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import Fuse from 'fuse.js';
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [userResults, setUserResults] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const token = useSelector((state) => state.token);
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -40,6 +43,29 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  const handleOnSearch = async({ currentTarget = {} }) => {
+      const { value } = currentTarget;
+      const searchQuery = value;
+      if (searchQuery !== "") {
+        const response = await fetch(`http://localhost:3001/users/user/${searchQuery}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const data = await response.json();
+      const fuse = new Fuse(data, {
+        keys: [
+          'firstName',
+          'lastName'
+        ]
+      });
+
+      const results = fuse.search(searchQuery);
+      setUserResults(searchQuery ? results.map(result => result.item) : ""); 
+      } else {
+        setUserResults([]);
+      }
+  }
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -64,10 +90,18 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Wyszukaj..." />
+            <InputBase placeholder="Wyszukaj..." onChange={handleOnSearch} />
             <IconButton>
               <Search />
             </IconButton>
+            <ul>
+              {userResults.length > 0 ? userResults.map(user => {
+                const {_id, firstName, lastName} = user;
+                return (
+                  <li key={_id}>{firstName} {lastName}</li>
+                )
+              }) : ""}
+            </ul>
           </FlexBetween>
         )}
       </FlexBetween>

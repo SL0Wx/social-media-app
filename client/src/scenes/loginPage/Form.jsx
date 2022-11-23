@@ -141,7 +141,7 @@ const Form = () => {
                 </g>
             </svg>
             </motion.div>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence mode='wait'>
                 {!isWelcome ? (
                     <motion.div key="forms" initial="pageDefault" animate="pageAnimate" exit="pageExit" variants={{
                         pageDefault: {
@@ -192,7 +192,7 @@ const Form = () => {
                                         {isRegister && (
                                             <>   
                                                 <TextField 
-                                                    className={isLogin ? "inputLogField" : "inputRedField"}
+                                                    className={isLogin ? "inputLogField" : "inputRegField"}
                                                     label="Imię" 
                                                     onBlur={handleBlur} 
                                                     onChange={handleChange} 
@@ -263,7 +263,7 @@ const Form = () => {
                                                         style: { color: '#212121'},
                                                     }}
                                                 />
-                                                <Box gridColumn="span 4" border={`1px solid #212121`} borderRadius="5px" p="1rem" className="inputField" backgroundColor="white">
+                                                <Box gridColumn="span 4" border={`1px solid #212121`} zIndex="100" borderRadius="5px" p="1rem" className="inputField" backgroundColor="white" color="black">
                                                     <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false} 
                                                         onDrop={(acceptedFiles) =>
                                                             setFieldValue("picture", acceptedFiles[0])
