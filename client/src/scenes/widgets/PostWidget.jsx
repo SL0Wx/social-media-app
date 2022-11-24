@@ -7,6 +7,7 @@ import {
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
+  import MyFriend from "components/MyFriend";
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
@@ -54,7 +55,7 @@ import {
         <Friend
           friendId={postUserId}
           name={name}
-          subtitle={format(new Date(createdAt), 'dd.mm.yyyy H:m')}
+          subtitle={format(new Date(createdAt), 'dd.MM.yyyy HH:mm')}
           userPicturePath={userPicturePath}
         />
         <Typography color={main} sx={{ mt: "1rem" }}>

@@ -14,14 +14,6 @@ export const getUser = async (req, res) => {
 export const getUsers = async (req, res) => {
     try {
         const array = await User.find();
-        /*const users = await Promise.all(
-            array.map((id) => User.findById(id))
-        );
-        const formattedUsers = users.map(
-            ( {_id, firstName, lastName, picturePath }) => {
-                return { _id, firstName, lastName, picturePath };
-            }
-        )*/
         res.status(200).json(array);
     } catch (err) {
         res.status(404).json({ error: err.message });

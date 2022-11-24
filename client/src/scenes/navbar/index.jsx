@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
+import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import Fuse from 'fuse.js';
 
@@ -41,6 +42,7 @@ const Navbar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
+  const mode = (useTheme().palette.mode === 'dark');
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
@@ -60,7 +62,7 @@ const Navbar = () => {
         ]
       });
 
-      const results = fuse.search(searchQuery);
+      const results = fuse.search(searchQuery, {limit: 3});
       setUserResults(searchQuery ? results.map(result => result.item) : ""); 
       } else {
         setUserResults([]);
@@ -95,11 +97,17 @@ const Navbar = () => {
             <IconButton>
               <Search />
             </IconButton>
-            <ul>
+            <ul className="SearchList">
               {userResults.length > 0 ? userResults.map(searchUser => {
-                const {_id, firstName, lastName} = searchUser;
+                const {_id, picturePath, firstName, lastName} = searchUser;
                 return (
-                  <li key={_id}>{firstName} {lastName} {_id === user._id ? "(Ty)" : null}</li>
+                  <li className="SearchItem" style={{ backgroundColor: mode ? "black" : "white"}} key={_id}  onClick={() => {
+                    navigate(`/profile/${_id}`);
+                    navigate(0);
+                  }}>
+                    <UserImage image={picturePath} size="30px"/> 
+                    {firstName} {lastName} {_id === user._id ? "(Ty)" : null}
+                  </li>
                 )
               }) : ""}
             </ul>

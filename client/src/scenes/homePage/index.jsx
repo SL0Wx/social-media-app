@@ -7,6 +7,7 @@ import PostsWidget from "scenes/widgets/PostsWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget"
 
 const HomePage = () => {
+    document.getElementsByTagName("body")[0].style.overflowY = "scroll";
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const { _id, picturePath } = useSelector((state) => state.user);
 

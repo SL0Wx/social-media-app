@@ -9,6 +9,10 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
@@ -282,4 +286,31 @@ form h2 {
   transform-origin: center;
   transform-box: fill-box;
   fill: #B2C3FF;
+}
+
+.SearchList {
+  position: fixed;
+  top: 0;
+  height: auto;
+  width: 21.75rem;
+  margin-top: 60px;
+  margin-left: -64px;
+  z-index: 10h
+}
+
+.SearchItem {
+  gap: 15px;
+  width: 100%;
+  padding: 10px 15px;
+  margin-top: 10px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+.SearchItem:hover {
+  color: #6284FF;
 }

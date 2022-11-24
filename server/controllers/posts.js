@@ -70,3 +70,7 @@ export const likePost = async (req, res) => {
         res.status(404).json({ error: err.message });
     }
 }
+
+export const commentPost = async (req, res) => {
+    const { id } = req.params;
+}
