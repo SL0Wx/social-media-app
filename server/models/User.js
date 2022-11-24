@@ -32,7 +32,10 @@ const UserSchema = new mongoose.Schema(
         },
         friends: {
             type: Array,
-            default: []
+            default: [{
+                friendId: String,
+                status: String,
+            }]
         },
         location: String,
     }, 

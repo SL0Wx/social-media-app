@@ -82,6 +82,7 @@ const Navbar = () => {
             },
           }}
         >
+          SFERA
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
@@ -95,10 +96,10 @@ const Navbar = () => {
               <Search />
             </IconButton>
             <ul>
-              {userResults.length > 0 ? userResults.map(user => {
-                const {_id, firstName, lastName} = user;
+              {userResults.length > 0 ? userResults.map(searchUser => {
+                const {_id, firstName, lastName} = searchUser;
                 return (
-                  <li key={_id}>{firstName} {lastName}</li>
+                  <li key={_id}>{firstName} {lastName} {_id === user._id ? "(Ty)" : null}</li>
                 )
               }) : ""}
             </ul>
