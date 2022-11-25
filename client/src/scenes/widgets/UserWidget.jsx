@@ -1,13 +1,9 @@
-import {
-    ManageAccountsOutlined,
-    EditOutlined,
-    LocationOnOutlined,
-    WorkOutlineOutlined,
-} from "@mui/icons-material";
+import { ManageAccountsOutlined, LocationOnOutlined } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
+import MyFriend from "components/MyFriend";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +62,12 @@ const UserWidget = ({ userId, picturePath }) => {
                         <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
                     </Box>
                 </FlexBetween>
-                <ManageAccountsOutlined />
+                {_id === userId ? (
+                    <ManageAccountsOutlined />
+                ) : (
+                    <MyFriend friendId={userId} />
+                )}
+
             </FlexBetween>
 
                 <Divider />
