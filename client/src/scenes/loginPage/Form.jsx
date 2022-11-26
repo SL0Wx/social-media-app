@@ -357,7 +357,7 @@ const Form = () => {
                                 </form>
                             </motion.div>
                             )}
-                        </Formik>
+                            </Formik>
                     </Box>
                 </Box>
                 </motion.div>

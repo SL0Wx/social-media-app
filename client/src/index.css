@@ -319,3 +319,73 @@ form h2 {
   width: 7rem;
   cursor: pointer;
 }
+
+.fgWidget {
+  min-height: 800px;
+  width: 100%;
+  max-width: 750px;
+  border-radius: 3rem;
+  margin: 2rem 0;
+}
+
+.fgHeader {
+  border-radius: 3rem;
+  height: 400px;
+  position: relative;
+}
+
+#countCircle {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#countHeader {
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#countCircleIn {
+  position: relative;
+}
+
+#countNumber {
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  top: 55%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 100;
+}
+
+.fgSearch {
+  position: relative;
+  margin: -2rem 0 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 100px;
+}
+
+#searchLabel {
+  font-weight: bold;
+}
+
+.friendItem {
+  width: 100%;
+}
+
+.fgList {
+  width: 100%;
+  margin: 0px;
+}

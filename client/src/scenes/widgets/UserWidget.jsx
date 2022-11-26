@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const UserWidget = ({ userId, picturePath }) => {
+const UserWidget = ({ userId, pageType }) => {
     const [user, setUser] = useState(null);
     const { _id } = useSelector((state) => state.user);
     const { palette } = useTheme();
@@ -31,15 +31,14 @@ const UserWidget = ({ userId, picturePath }) => {
         getUser();
     }, [])
 
-    if (!user) {
-        return null;
-    }
+    if (!user) return null;
 
     const {
         firstName,
         lastName,
         location,
         friends,
+        picturePath,
     } = user;
 
     return (
@@ -62,23 +61,27 @@ const UserWidget = ({ userId, picturePath }) => {
                         <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
                     </Box>
                 </FlexBetween>
-                {_id === userId ? (
+                {_id === userId && pageType !== "group" ? (
                     <ManageAccountsOutlined />
                 ) : (
                     <MyFriend friendId={userId} />
                 )}
 
             </FlexBetween>
+                
+            {pageType !== "group" ? (
+                <>
+                    {/* SECOND ROW */}
+                    <Divider />
 
-                <Divider />
-
-                {/* SECOND ROW */}
-                <Box p="1rem 0">
-                    <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
-                        <LocationOnOutlined fontSize="large" sx={{ color: main }} />
-                        <Typography color={medium}>{location}</Typography>
+                    <Box p="1rem 0">
+                        <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
+                            <LocationOnOutlined fontSize="large" sx={{ color: main }} />
+                            <Typography color={medium}>{location}</Typography>
+                        </Box>
                     </Box>
-                </Box>
+                </>
+            ) : null}
         </WidgetWrapper>
     );
 };

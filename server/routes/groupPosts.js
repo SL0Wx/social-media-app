@@ -5,7 +5,7 @@ import { verifyToken } from "../middleware/auth.js";
 const router = express.Router();
 
 /* READ */
-router.get("/", verifyToken, getGroupPosts);
+router.get("/groupPosts", verifyToken, getGroupPosts);
 
 /* UPDATE */
 router.patch("/:id/like", verifyToken, likeGroupPost);

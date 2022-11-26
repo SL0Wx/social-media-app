@@ -1,0 +1,85 @@
+import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton, useMediaQuery } from "@mui/material";
+import FlexBetween from "components/FlexBetween";
+import Navbar from "scenes/navbar";
+import Sidebar from "components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import FriendListWidget from "scenes/widgets/FriendListWidget";
+
+const FriendsPage = () => {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+    const theme = useTheme();
+    const alt = theme.palette.background.alt;
+    const mode = (useTheme().palette.mode === 'dark');
+    const token = useSelector((state) => state.token);
+    const { _id } = useSelector((state) => state.user);
+
+    const getUser = async () => {
+      const response = await fetch(`http://localhost:3001/users/${_id}`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setUser(data);
+    };
+
+    useEffect(() => {
+      getUser();
+    }, [])
+
+    if (!user) {
+      return null;
+    }
+
+    const { friends } = user;
+
+    return (
+        <Box>
+            <Sidebar />
+            <Navbar />
+            <FlexBetween style={{ justifyContent: "space-around"}}>
+                <Box className="fgWidget" backgroundColor={alt}>
+                    <Box className="fgHeader">
+                        <Box className="fgSvg">
+                          <svg width="100%" height="286" viewBox="0 0 772 286" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path id="header_shape" d="M385.108 284.095L16.5055 150.928C6.60029 147.35 0 137.947 0 127.416V25C0 11.1929 11.1929 0 25 0H746.732C760.539 0 771.732 11.1929 771.732 25V127.663C771.732 138.073 765.281 147.393 755.539 151.06L402.41 283.98C396.84 286.076 390.705 286.117 385.108 284.095Z" fill="#6486FF"/>
+                          </svg>
+                        </Box>
+                        <Typography id="countHeader" fontSize="4rem" color={alt}>
+                            ZNAJOMI
+                        </Typography>
+                        <svg id="countCircle" width="194" height="194" viewBox="0 0 194 194" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g id="countCircleIn">
+                            <circle id="outside" cx="97.1202" cy="97.0351" r="84.0147" fill="#DEE5FF" stroke={alt} strokeWidth="25"/>
+                            <circle id="inside" cx="97.5" cy="97.5" r="72.5" fill="#6284FF"/>
+                          </g>
+                        </svg>
+                        <Typography id="countNumber" fontSize="3rem" color={alt}>
+                          {friends.length}
+                        </Typography>
+                    </Box>
+                    <Box className="fgSearch">
+                        <Typography id="searchLabel" fontSize="2rem" color={theme.palette.primary.main}>
+                          Wyszukaj znajomego
+                        </Typography>
+                        <InputBase placeholder="Wyszukaj swojego znajomego..."
+                        sx={{
+                          width: "70%",
+                          backgroundColor: theme.palette.neutral.light,
+                          borderRadius: "2rem",
+                          padding: "0.25rem 2rem",
+                          margin: "0 auto",
+                        }} />
+                    </Box>
+                    <Box className="fgList">
+                      <FriendListWidget userId={user._id} pageType="friends"/>
+                    </Box>
+                </Box>
+            </FlexBetween>
+        </Box>
+    )
+}
+
+export default FriendsPage;

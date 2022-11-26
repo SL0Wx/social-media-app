@@ -9,6 +9,6 @@ router.get("/:id", verifyToken, getGroup);
 router.get("/", verifyToken, getGroups);
 
 /* UPDATE */
-router.patch("/:id/:groupId", verifyToken, joinLeaveGroup);
+router.patch("/:id/:userId", verifyToken, joinLeaveGroup);
 
 export default router;

@@ -4,19 +4,20 @@ import User from "../models/User.js";
 /* CREATE */
 export const createGroup = async (req, res) => {
     try {
-        const { userId, picturePath } = req.body;
+        const { groupName, founderId, topic, picturePath } = req.body;
         const newGroup = new Group({
             groupName,
             picturePath,
-            founderId: userId,
-            members: [userId],
+            founderId,
+            members: [founderId],
             posts: [],
             topic,
-        })
-        await newGroup.save();
+        });
 
+        await newGroup.save();
+         
         const group = await Group.find();
-        res.status(201).json(post);
+        res.status(201).json(group);
     } catch (err) {
         res.status(409).json({ message: err.message });
     }
@@ -45,19 +46,19 @@ export const getGroups = async (req, res) => {
 /* UPDATE */
 export const joinLeaveGroup = async (req, res) => {
     try {
-        const { id, groupId } = req.params;
-        const user = await User.findById(id);
-        const group = await Group.findById(groupId);
+        const { id, userId } = req.params;
+        const user = await User.findById(userId);
+        const group = await Group.findById(id);
 
-        if (group.members.includes(id)) {
-            group.members = group.members.filter((memberId) => memberId !== id);
+        if (group.members.includes(userId)) {
+            group.members = group.members.filter((memberId) => memberId !== userId);
         } else {
-            group.members.push(id);
+            group.members.push(userId);
         }
         await group.save();
 
         const members = await Promise.all(
-            group.members.map((id) => User.findById(id))
+            group.members.map((userId) => User.findById(userId))
         );
         const formattedMembers = members.map(
             ({ _id, firstName, lastName, location, picturePath }) => {

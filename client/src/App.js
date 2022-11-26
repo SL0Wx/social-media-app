@@ -2,7 +2,9 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "./scenes/homePage";
 import LoginPage from "./scenes/loginPage";
 import ProfilePage from "./scenes/profilePage";
+import FriendsPage from "./scenes/friendsPage";
 import GroupsPage from "./scenes/groupsPage";
+import GroupPage from "./scenes/groupPage";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -22,8 +24,10 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
+            <Route path="/friendsPage" element={isAuth ? <FriendsPage /> : <Navigate to="/" />} />
             <Route path="/groupsPage" element={isAuth ? <GroupsPage /> : <Navigate to="/" />} />
             <Route path="/profile/:userId" element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
+            <Route path="/group/:groupId" element={isAuth ? <GroupPage /> : <Navigate to="/" />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

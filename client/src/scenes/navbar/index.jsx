@@ -30,6 +30,7 @@ import Fuse from 'fuse.js';
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [userResults, setUserResults] = useState([]);
+  const [groupResults, setGroupResults] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -50,22 +51,37 @@ const Navbar = () => {
       const { value } = currentTarget;
       const searchQuery = value;
       if (searchQuery !== "") {
-        const response = await fetch(`http://localhost:3001/users/user/${searchQuery}`, {
+        const responseUser = await fetch(`http://localhost:3001/users/user/${searchQuery}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       })
-      const data = await response.json();
-      const fuse = new Fuse(data, {
+      const dataUser = await responseUser.json();
+      const fuseUser = new Fuse(dataUser, {
         keys: [
           'firstName',
           'lastName'
         ]
       });
 
-      const results = fuse.search(searchQuery, {limit: 3});
-      setUserResults(searchQuery ? results.map(result => result.item) : ""); 
+      const resultsUser = fuseUser.search(searchQuery, {limit: 3});
+      setUserResults(searchQuery ? resultsUser.map(result => result.item) : "");
+      
+      const responseGroup = await fetch("http://localhost:3001/groups", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const dataGroup = await responseGroup.json();
+      const fuseGroup = new Fuse(dataGroup, {
+        keys: [
+          'groupName'
+        ]
+      });
+      
+      const resultsGroup = fuseGroup.search(searchQuery, {limit: 3});
+      setGroupResults(searchQuery ? resultsGroup.map(result => result.item) : "");
       } else {
         setUserResults([]);
+        setGroupResults([]);
       }
   }
 
@@ -86,7 +102,7 @@ const Navbar = () => {
             </IconButton>
             <ul className="SearchList">
               {userResults.length > 0 ? userResults.map(searchUser => {
-                const {_id, picturePath, firstName, lastName} = searchUser;
+                const {_id, picturePath, firstName, lastName } = searchUser;
                 return (
                   <li className="SearchItem" style={{ backgroundColor: mode ? "black" : "white"}} key={_id}  onClick={() => {
                     navigate(`/profile/${_id}`);
@@ -94,6 +110,20 @@ const Navbar = () => {
                   }}>
                     <UserImage image={picturePath} size="30px"/> 
                     {firstName} {lastName} {_id === user._id ? "(Ty)" : null}
+                  </li>
+                )
+              }) : ""}
+            </ul>
+            <ul className="SearchList">
+              {groupResults.length > 0 ? groupResults.map(searchGroup => {
+                const { _id, picturePath, groupName } = searchGroup;
+                return (
+                  <li className="SearchItem" style={{ backgroundColor: mode ? "black" : "white"}} key={_id}  onClick={() => {
+                    navigate(`/group/${_id}`);
+                    navigate(0);
+                  }}>
+                    <UserImage image={picturePath} size="30px"/> 
+                    {groupName}
                   </li>
                 )
               }) : ""}
