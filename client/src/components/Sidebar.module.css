@@ -1,0 +1,128 @@
+.app_sidebar_closed {
+    display: flex; 
+    position: fixed; 
+    left: 0; 
+    top: 0;
+    z-index: 150; 
+    padding: 0.5rem; 
+    height: auto;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: center; 
+    height: 100vh; 
+    width: 6rem
+}
+
+.app_sidebar_open {
+    display: flex; 
+    position: fixed; 
+    left: 0; 
+    top: 0;
+    z-index: 150; 
+    padding: 0.5rem; 
+    height: auto;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: center; 
+    height: 100vh; 
+    width: 16rem
+}
+
+.app_sidebar_open .sidebar_icon_wrapper {
+    width: 90%;
+    padding: 8px 0px 8px 15px;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    justify-content: flex-start;
+    text-align: right;
+}
+
+.app_sidebar_closed .sidebar_icon_wrapper {
+    margin: 5px 0;
+}
+
+.app_sidebar_closed .sidebar_icon_wrapper .sidebar_label {
+    display: none;
+    opacity: 0;
+}
+
+.app_sidebar_open .sidebar_icon_wrapper .sidebar_label {
+    display: block;
+    opacity: 1;
+    color: #6284FF;
+}
+
+.app_sidebar_open .sidebar_icon {
+    justify-self: flex-start;
+}
+
+.sidebar_icon_wrapper {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s;
+    border-radius: 15px;
+    background: transparent;
+}
+
+.sidebar_icon {
+    margin: 50px 0;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar_menu_closed {
+    margin: 15px 0 22px 0;
+    cursor: pointer;
+    width: 50px;
+    height: 40px;
+}
+
+.sidebar_menu_open {
+    margin: 17px 0 22px 0;
+    height: 35px;
+    width: 80px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.sidebar_icon_wrapper:hover {
+    border-radius: 15px;
+
+}
+
+.sidebar_label {
+    font-size: 24px;
+    margin-left: 30px;
+}
+
+.app_sidebar_logo_on {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar_logo_on {
+    display: flex;
+    width: 7rem;
+    height: auto;
+    margin: 0 22px 8px 0;
+    cursor: pointer;
+}
+
+.sidebar_logo_off {
+    display: none;
+    width: 100px;
+    height: 40px;
+}
+
+.sidebar_menu_closed:hover ~ #Line_8 {
+    fill: red;
+}

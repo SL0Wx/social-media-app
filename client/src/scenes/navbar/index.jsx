@@ -70,22 +70,9 @@ const Navbar = () => {
   }
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt} position="sticky" top="0" zIndex="100">
-      <FlexBetween gap="1.75rem">
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="primary"
-          onClick={() => navigate("/home")}
-          sx={{
-            "&:hover": {
-              color: primaryLight,
-              cursor: "pointer",
-            },
-          }}
-        >
-          SFERA
-        </Typography>
+    <FlexBetween marginLeft="96px" padding="1.3rem 3% 1.1rem 20px" backgroundColor={alt} position="sticky" top="0" zIndex="100">
+      <FlexBetween gap="2rem">
+        <img className="homeLogo" src="/assets/sfera_txt_icon.svg"  onClick={() => navigate("/home")}/>
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}

@@ -314,3 +314,8 @@ form h2 {
 .SearchItem:hover {
   color: #6284FF;
 }
+
+.homeLogo {
+  width: 7rem;
+  cursor: pointer;
+}
