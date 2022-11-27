@@ -74,7 +74,7 @@ const Navbar = () => {
       const fuseGroup = new Fuse(dataGroup, {
         keys: [
           'groupName'
-        ]
+        ],
       });
       
       const resultsGroup = fuseGroup.search(searchQuery, {limit: 3});

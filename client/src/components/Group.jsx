@@ -16,11 +16,11 @@ const Group = ({ groupId, groupName, picturePath, founderId, members, topic }) =
  
     const isMember = members.find((memberId) => memberId === _id);
     return (
-        <FlexBetween m="auto" width="50%">
+        <FlexBetween width="10rem">
             {isMember ? (
                 <FlexBetween gap="1rem">
-                    <UserImage image={picturePath} />
-                    <Box>
+                    <UserImage image={picturePath} size="55px"/>
+                    <Box width="10rem">
                     <Typography
                         color={main}
                         variant="h5"
@@ -41,7 +41,7 @@ const Group = ({ groupId, groupName, picturePath, founderId, members, topic }) =
                     <Typography color={medium} fontSize="0.75rem">
                         {topic} {members.length} członków
                     </Typography>
-                    </Box>
+                  </Box>
                 </FlexBetween>
             ) : null}
         </FlexBetween>

@@ -59,7 +59,7 @@ const FriendListWidget = ({ userId, pageType }) => {
                 ) : (
                     <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
                         {friends.map((friend) => (
-                            <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main}  borderRadius="4rem">
+                            <Box flex="0 0 45%" border="3px solid" padding="10px 15px" key={friend._id} borderColor={theme.palette.primary.main}  borderRadius="4rem">
                                 <MyFriend 
                                     key={friend._id}
                                     friendId={friend._id}

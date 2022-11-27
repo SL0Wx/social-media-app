@@ -6,7 +6,7 @@ html, body, #root, .app {
 }
 
 body {
-  overflow: hidden;
+  overflow: scroll;
 }
 
 ::-webkit-scrollbar {
@@ -340,6 +340,7 @@ form h2 {
   left: 0;
   right: 0;
   margin: auto;
+  overflow: visible;
 }
 
 #countHeader {
@@ -388,4 +389,23 @@ form h2 {
 .fgList {
   width: 100%;
   margin: 0px;
+}
+
+#outside {
+  animation: expand3 5s infinite ease-in-out 1.5s;
+  transform: scale(1);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes expand3 {
+  0% {
+      transform: scale(1);
+  }
+  50%{
+      transform: scale(1.2);
+  }
+  100%{
+      transform: scale(1);
+  }
 }
