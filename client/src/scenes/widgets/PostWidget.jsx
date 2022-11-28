@@ -1,7 +1,7 @@
 import {
     ChatBubbleOutlineOutlined,
-    FavoriteBorderOutlined,
-    FavoriteOutlined,
+    ThumbUpOutlined,
+    ThumbUp,
     ShareOutlined,
   } from "@mui/icons-material";
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
@@ -70,14 +70,14 @@ import {
             src={`http://localhost:3001/assets/${picturePath}`}
           />
         )}
-        <FlexBetween mt="0.25rem">
+        <FlexBetween mt="0.5rem">
           <FlexBetween gap="1rem">
             <FlexBetween gap="0.3rem">
               <IconButton onClick={patchLike}>
                 {isLiked ? (
-                  <FavoriteOutlined sx={{ color: primary }} />
+                  <ThumbUp sx={{ color: primary }} />
                 ) : (
-                  <FavoriteBorderOutlined />
+                  <ThumbUpOutlined />
                 )}
               </IconButton>
               <Typography>{likeCount}</Typography>

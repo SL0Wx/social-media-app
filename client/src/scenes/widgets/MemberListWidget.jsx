@@ -4,14 +4,15 @@ import UserWidget from "scenes/widgets/UserWidget";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setGroupMembers } from "state";
 
 const MemberListWidget = ({ groupId }) => {
     const dispatch = useDispatch();
     const { palette }= useTheme();
     const token = useSelector((state) => state.token);
     const { _id } = useSelector((state) => state.user);
+    const members = useSelector((state) => state.members);
     const [group, setGroup] = useState();
-    let members = [];
 
     const getGroup = async () => {
         const response = await fetch(`http://localhost:3001/groups/${groupId}`, {
@@ -20,6 +21,7 @@ const MemberListWidget = ({ groupId }) => {
         });
         const data = await response.json();
         setGroup(data);
+        dispatch(setGroupMembers({ members: data.members }))
       };
 
     useEffect(() => {
@@ -27,9 +29,6 @@ const MemberListWidget = ({ groupId }) => {
     }, []);
 
     if (!group) return null;
-
-    members = group.members;
-    console.log(members);
 
     return (
         <WidgetWrapper>
@@ -40,6 +39,7 @@ const MemberListWidget = ({ groupId }) => {
                 {members.map((memberId) => (
                     <UserWidget userId={memberId} pageType="group" />
                 ))}
+                {console.log(members)}
             </Box>
         </WidgetWrapper>
     )

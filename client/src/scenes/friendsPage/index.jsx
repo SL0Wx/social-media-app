@@ -67,7 +67,7 @@ const FriendsPage = () => {
         <Box>
             <Sidebar />
             <Navbar />
-            <FlexBetween style={{ justifyContent: "space-around"}}>
+            <FlexBetween style={{ justifyContent: "space-around", margin: "0 0 0 100px"}}>
                 <Box className="fgWidget" backgroundColor={alt}>
                     <Box className="fgHeader">
                         <Box className="fgSvg">

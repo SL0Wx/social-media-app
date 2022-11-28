@@ -41,7 +41,7 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath }) => {
   return (
     <FlexBetween>
       {name !== undefined && subtitle !== undefined && userPicturePath !== undefined ? (
-        <FlexBetween gap="1rem">
+      <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box>
           <Typography

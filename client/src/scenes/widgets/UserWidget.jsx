@@ -58,7 +58,11 @@ const UserWidget = ({ userId, pageType }) => {
                         onClick={() => navigate(`/profile/${userId}`)}>
                             {firstName} {lastName}
                         </Typography>
-                        <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
+                        {pageType !== "group" ? (
+                            <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
+                        ) : (
+                            <Typography color={medium}>{location}</Typography>
+                        )}
                     </Box>
                 </FlexBetween>
                 {_id === userId && pageType !== "group" ? (

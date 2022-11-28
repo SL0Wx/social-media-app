@@ -28,13 +28,16 @@ const GroupPage = () => {
 
     if (!group) return null;
 
+    const founderId = group.founderId;
+    console.log(founderId);
+
     return (
         <Box>
             <Sidebar />
             <Navbar />
             <Box width="100%" padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center">
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-                    <GroupWidget groupId={groupId} founderId={group.founderId} />
+                    <GroupWidget groupId={groupId} founderId={founderId} />
                     <Box m="2rem 0" />
                     <MemberListWidget groupId={groupId} />
                 </Box>
