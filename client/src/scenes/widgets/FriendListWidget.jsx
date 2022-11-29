@@ -34,7 +34,7 @@ const FriendListWidget = ({ userId, pageType }) => {
                     <Typography color={palette.neutral.dark} variant="h5" fontWeight="500" sx={{ mb: "1.5rem"}}>
                         Znajomi
                     </Typography>
-                    <Box display="flex" flexDirection="column" gap="1.5rem">
+                    <Box display="flex" flexDirection="column" gap="1.5rem" pb="10px">
                         {friends.map((friend) => (
                             _id !== userId ? (
                                 <Friend 

@@ -57,16 +57,16 @@ export const joinLeaveGroup = async (req, res) => {
         }
         await group.save();
 
-        const members = await Promise.all(
+        /*const members = await Promise.all(
             group.members.map((userId) => User.findById(userId))
         );
         const formattedMembers = members.map(
             ({ _id, firstName, lastName, location, picturePath }) => {
                 return { _id, firstName, lastName, location, picturePath };
             }
-        );
+        );*/
 
-        res.status(200).json(formattedMembers);
+        res.status(200).json(group.members);
     } catch (err) {
         res.status(404).json({ error: err.message });
     }

@@ -16,17 +16,11 @@ const HomePage = () => {
         <Box>
             <Sidebar />
             <Navbar />
-            <Box margin="0 100px" width={isNonMobileScreens ? "90%" : "75%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="0.5rem" justifyContent="space-around">
-                <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-                    <UserWidget userId={_id} />
-                </Box>
-                <Box flexBasis={isNonMobileScreens ? "42%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>
+            <Box ml="6rem" width={isNonMobileScreens ? "92%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="0.5rem" justifyContent="space-around">
+                <Box flexBasis={isNonMobileScreens ? "50%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>
                     <MyPostWidget picturePath={picturePath} />
                     <PostsWidget userId={_id} />
                 </Box>
-                {isNonMobileScreens && <Box flexBasis="26%">
-                    <FriendListWidget userId={_id} pageType="home"/>
-                </Box>}
             </Box>
         </Box>
     );

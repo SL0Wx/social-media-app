@@ -89,10 +89,15 @@ const Navbar = () => {
     <FlexBetween marginLeft="96px" padding="1.3rem 3% 1.1rem 20px" backgroundColor={alt} position="sticky" top="0" zIndex="100">
       <FlexBetween gap="2rem">
         <img className="homeLogo" src="/assets/sfera_txt_icon.svg"  onClick={() => navigate("/home")}/>
-        {isNonMobileScreens && (
+      </FlexBetween>
+
+      {/* DESKTOP NAV */}
+      {isNonMobileScreens ? (
+        <FlexBetween gap="2rem">
+          {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
-            borderRadius="9px"
+            borderRadius="25px"
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
@@ -130,11 +135,6 @@ const Navbar = () => {
             </ul>
           </FlexBetween>
         )}
-      </FlexBetween>
-
-      {/* DESKTOP NAV */}
-      {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -142,8 +142,6 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}

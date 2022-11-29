@@ -275,6 +275,10 @@ form h2 {
   transform-box: fill-box;
 }
 
+#AsteroidsWrapWelcome {
+  display: none;
+}
+
 #AsteroidsWrapLog g path {
   animation: rotate 30s infinite linear;
   transform-origin: center;

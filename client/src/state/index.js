@@ -6,6 +6,7 @@ const initialState = {
     token: null,
     posts: [],
     groups: [],
+    members: [],
 };
 
 export const authSlice = createSlice({
@@ -51,8 +52,8 @@ export const authSlice = createSlice({
             state.groups = updatedGroups;
         },
         setGroupMembers: (state, action) => {
-            if (state.groups) {
-                state.groups.members = action.payload.members;
+            if (state.members) {
+                state.members = action.payload.members;
             }
         }
     }
