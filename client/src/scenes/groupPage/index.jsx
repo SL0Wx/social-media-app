@@ -1,15 +1,19 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "scenes/navbar";
 import Sidebar from "components/Sidebar";
 import GroupWidget from "scenes/widgets/GroupWidget";
 import MemberListWidget from "scenes/widgets/MemberListWidget";
+import MyGroupPostWidget from "scenes/widgets/MyGroupPostWidget";
 
 const GroupPage = () => {
     const [group, setGroup] = useState(null);
     const { groupId } = useParams();
+    const [founderId, setFounderId] = useState(null);
+    const [isMember, setIsMember] = useState(null);
+    const {_id, picturePath } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
@@ -19,17 +23,17 @@ const GroupPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
+        setFounderId(data.founderId);
         setGroup(data);
+        const isMember = group.members.find((memberId) => memberId === _id);
     };
 
     useEffect(() => {
         getGroup();
+        console.log(group);
     }, []);
 
     if (!group) return null;
-
-    const founderId = group.founderId;
-    console.log(founderId);
 
     return (
         <Box>
@@ -42,6 +46,9 @@ const GroupPage = () => {
                     <MemberListWidget groupId={groupId} />
                 </Box>
                 <Box flexBasis={isNonMobileScreens ? "42%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>
+                    {isMember ? (
+                        <MyGroupPostWidget groupId={groupId} userPicturePath={picturePath} />
+                    ) : null}
                     {/*<PostsWidget userId={userId} isProfile />*/}
                 </Box>
                 {isNonMobileScreens && <Box flexBasis="26%"></Box>}

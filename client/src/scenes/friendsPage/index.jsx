@@ -20,6 +20,7 @@ const FriendsPage = () => {
     const token = useSelector((state) => state.token);
     const { _id } = useSelector((state) => state.user);
     const [friendResults, setFriendResults] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const getUser = async () => {
       const response = await fetch(`http://localhost:3001/users/${_id}`, {
@@ -44,6 +45,7 @@ const FriendsPage = () => {
       const { value } = currentTarget;
       const searchQuery = value;
       if (searchQuery !== "") {
+        setSearchQuery(searchQuery);
         const responseFriend = await fetch(`http://localhost:3001/users/user/${searchQuery}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -58,8 +60,14 @@ const FriendsPage = () => {
       });
 
       const resultsFriend = fuseFriend.search(searchQuery);
-      setFriendResults(searchQuery ? resultsFriend.map(result => result.item) : null);
+      setFriendResults(searchQuery ? resultsFriend.map(result => {
+        const isFriend = friends.find((friend) => friend === result.item._id)
+        if (isFriend) {
+          return result.item;
+        } 
+      }) : null);
       } else {
+      setSearchQuery("")
       setFriendResults([]);
       }
     }
@@ -103,11 +111,12 @@ const FriendsPage = () => {
                         }} />
                     </Box>
                     <Box className="fgList">
-                      {friendResults.length > 0 ? (
+                      {friendResults.length > 0 || searchQuery !== "" ? (
                       <WidgetWrapper>
                       <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
                       {friendResults.length > 0 ? friendResults.map(searchFriend => {
-                        const {_id, picturePath, location, firstName, lastName } = searchFriend;
+                        if (searchFriend !== undefined) {
+                          const {_id, picturePath, location, firstName, lastName } = searchFriend;
                          return (
                           <>
                           { _id !== user._id ? 
@@ -123,6 +132,7 @@ const FriendsPage = () => {
                           : null}
                           </>
                          )
+                        }
                       }) : null }
                       </Box>
                       </WidgetWrapper>

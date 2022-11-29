@@ -64,7 +64,9 @@ const GroupWidget = ({ groupId, founderId }) => {
     }, []);
 
     if (!group) return null;
+    if (!founder) return null;
 
+    //console.log(founder);
     const { groupName, members, posts, topic } = group;
     const { firstName, lastName, picturePath } = founder;
     const isMember = groupMembers.find((memberId) => memberId === _id);

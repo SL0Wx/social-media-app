@@ -4,7 +4,7 @@ import MyFriend from "components/MyFriend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "state";
+import { setFriends, setUserFriends } from "state";
 
 const FriendListWidget = ({ userId, pageType }) => {
     const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const FriendListWidget = ({ userId, pageType }) => {
     const token = useSelector((state) => state.token);
     const { _id } = useSelector((state) => state.user);
     const friends = useSelector((state) => state.user.friends);
+    const userFriends = useSelector((state) => state.friends);
     const theme = useTheme();
 
     const getFriends = async () => {
@@ -21,6 +22,7 @@ const FriendListWidget = ({ userId, pageType }) => {
         });
         const data = await response.json();
         dispatch(setFriends({ friends: data }));
+        dispatch(setUserFriends({ friends: data }));
     };
 
     useEffect(() => {

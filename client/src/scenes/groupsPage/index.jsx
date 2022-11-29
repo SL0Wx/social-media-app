@@ -1,5 +1,5 @@
 import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton, useMediaQuery } from "@mui/material";
-import { AddCircleOutline, AddCircle } from "@mui/icons-material";
+import { AddCircleOutline, AddCircle, Close } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import Navbar from "scenes/navbar";
 import Sidebar from "components/Sidebar";
@@ -26,6 +26,7 @@ const GroupsPage = () => {
     const { _id } = useSelector((state) => state.user);
     const [groupResults, setGroupResults] = useState([]);
     const [myGroups, setMyGroups] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     
     const getUser = async () => {
       const response = await fetch(`http://localhost:3001/users/${_id}`, {
@@ -60,6 +61,7 @@ const GroupsPage = () => {
       const { value } = currentTarget;
       const searchQuery = value;
       if (searchQuery !== "") {
+        setSearchQuery(searchQuery);
         const responseGroup = await fetch("http://localhost:3001/groups", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -84,13 +86,9 @@ const GroupsPage = () => {
 
       setGroupResults(searchQuery ? resultsGroup.map(result => result.item) : null);
       } else {
+      setSearchQuery("");
       setGroupResults([]);
       }
-
-      function handleChange(value) {
-        setIsOpen(value);
-      }
-
     }
 
     return (
@@ -142,7 +140,7 @@ const GroupsPage = () => {
                     </FlexBetween>
                 </Box>
                 <Box className="fgList">
-                  {groupResults.length > 0 ? (
+                  {groupResults.length > 0 || searchQuery !== "" ? (
                     <WidgetWrapper>
                     <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
                     {groupResults.length > 0 ? groupResults.map(searchGroup => {
@@ -169,6 +167,9 @@ const GroupsPage = () => {
             {isOpen ? (
               <Box className="formBox" style={{ background: mode ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)", backdropFilter: "blur(10px)", }}>
                 <Form />
+                <IconButton onClick={() => setIsOpen(false)} style={{ position: "absolute", top: "0", right: "0", margin: "50px 100px", zIndex: "110"}}>
+                    <Close sx={{ fontSize: "2.5rem" }}/>
+                </IconButton>
               </Box>
             ) : null}
         </FlexBetween>

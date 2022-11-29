@@ -42,13 +42,13 @@ const UserWidget = ({ userId, pageType }) => {
     } = user;
 
     return (
-        <WidgetWrapper>
+        <WidgetWrapper padding={pageType === "group" ? "0.1rem !important" : null}>
             {/* FIRST ROW */}
-            <FlexBetween gap="0.5rem" pb="1.1rem">
+            <FlexBetween gap="0.5rem" pb={pageType === "group" ? "0" : "1.1rem"}>
                 <FlexBetween gap="1rem">
-                    <UserImage image={picturePath} />
+                    <UserImage image={picturePath} size={pageType === "group" ? "45px" : "60px"} />
                     <Box>
-                        <Typography variant="h4" color={dark} fontWeight="500"
+                        <Typography variant={pageType === "group" ? "h5" : "h4"} color={dark} fontWeight="500"
                         sx={{
                             "&:hover": {
                                 color: palette.primary.main,

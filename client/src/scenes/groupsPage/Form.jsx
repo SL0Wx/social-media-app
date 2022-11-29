@@ -69,9 +69,6 @@ const Form = () => {
                 <Typography id="searchLabel" fontSize="2rem">
                     DODAJ NOWĄ GRUPĘ
                 </Typography>
-                <IconButton onClick={() => navigate(0)}>
-                    <Close sx={{ fontSize: "2.5rem" }}/>
-                </IconButton>
             </FlexBetween>
             <FlexBetween gap="1.5rem" p="1.5rem 0">
                 <InputBase placeholder="Nazwa grupy" onChange={(e) => setGroupName(e.target.value)} value={groupName}
