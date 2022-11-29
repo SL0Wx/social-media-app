@@ -1,4 +1,5 @@
 import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton, useMediaQuery } from "@mui/material";
+import { AddCircleOutline, AddCircle } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import Navbar from "scenes/navbar";
 import Sidebar from "components/Sidebar";
@@ -16,6 +17,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 
 const GroupsPage = () => {
     const [user, setUser] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const theme = useTheme();
     const alt = theme.palette.background.alt;
@@ -84,13 +86,18 @@ const GroupsPage = () => {
       } else {
       setGroupResults([]);
       }
+
+      function handleChange(value) {
+        setIsOpen(value);
+      }
+
     }
 
     return (
         <Box>
         <Sidebar />
         <Navbar />
-        <FlexBetween style={{ justifyContent: "space-around", flexDirection: "column" }}>
+        <FlexBetween style={{ justifyContent: "space-around", flexDirection: "column", margin: "0 0 0 100px" }}>
             <Box className="fgWidget" backgroundColor={alt}>
                 <Box className="fgHeader">
                     <Box className="fgSvg">
@@ -115,14 +122,24 @@ const GroupsPage = () => {
                     <Typography id="searchLabel" fontSize="2rem" color={theme.palette.primary.main}>
                       Wyszukaj grupy
                     </Typography>
-                    <InputBase placeholder="Wyszukaj swojej grupy..." onChange={handleOnSearch}
-                    sx={{
-                      width: "70%",
-                      backgroundColor: theme.palette.neutral.light,
-                      borderRadius: "2rem",
-                      padding: "0.25rem 2rem",
-                      margin: "0 auto",
-                    }} />
+                    <FlexBetween flexDirection="row" width="72%" gap="0.5rem" justifyContent="space-between" position="relative">
+                      <InputBase placeholder="Wyszukaj swojej grupy..." onChange={handleOnSearch}
+                      sx={{
+                        width: "70%",
+                        backgroundColor: theme.palette.neutral.light,
+                        borderRadius: "2rem",
+                        padding: "0.25rem 2rem",
+                        margin: "0 auto",
+                        flexBasis: "100%",
+                      }} />
+                      <IconButton onClick={() => setIsOpen(!isOpen)} sx={{ position: "absolute", right: "0"}}>
+                          {isOpen ? (
+                            <AddCircle sx={{ fontSize: "2rem" }}></AddCircle>
+                          ) : (
+                            <AddCircleOutline sx={{ fontSize: "2rem" }}></AddCircleOutline>
+                          )}
+                      </IconButton>
+                    </FlexBetween>
                 </Box>
                 <Box className="fgList">
                   {groupResults.length > 0 ? (
@@ -149,7 +166,11 @@ const GroupsPage = () => {
                   ) : <GroupListWidget userId={_id} pageType="groups"/>}
                 </Box>
             </Box>
-            <Form />
+            {isOpen ? (
+              <Box className="formBox" style={{ background: mode ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)", backdropFilter: "blur(10px)", }}>
+                <Form />
+              </Box>
+            ) : null}
         </FlexBetween>
     </Box>
     )

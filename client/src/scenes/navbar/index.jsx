@@ -99,7 +99,7 @@ const Navbar = () => {
             backgroundColor={neutralLight}
             borderRadius="25px"
             gap="3rem"
-            padding="0.1rem 1.5rem"
+            padding="0.1rem 0.25rem 0.1rem 1.5rem"
           >
             <InputBase placeholder="Wyszukaj..." onChange={handleOnSearch} />
             <IconButton>

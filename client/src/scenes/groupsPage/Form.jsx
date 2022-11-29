@@ -9,7 +9,7 @@ import FlexBetween from "components/FlexBetween";
 import * as yup from "yup";
 import WidgetWrapper from "components/WidgetWrapper";
 
-import { DeleteOutlined, ImageOutlined, MoreHorizOutlined, EditOutlined } from "@mui/icons-material";
+import { DeleteOutlined, ImageOutlined, MoreHorizOutlined, EditOutlined, Close } from "@mui/icons-material";
 import UserImage from "components/UserImage";
 import { setGroups } from "state";
 
@@ -64,8 +64,16 @@ const Form = () => {
     }; 
     
     return (
-        <WidgetWrapper>
-            <FlexBetween gap="1.5rem">
+        <WidgetWrapper className="formBlock">
+            <FlexBetween flexDirection="row" justifyContent="space-between !important">
+                <Typography id="searchLabel" fontSize="2rem">
+                    DODAJ NOWĄ GRUPĘ
+                </Typography>
+                <IconButton onClick={() => navigate(0)}>
+                    <Close sx={{ fontSize: "2.5rem" }}/>
+                </IconButton>
+            </FlexBetween>
+            <FlexBetween gap="1.5rem" p="1.5rem 0">
                 <InputBase placeholder="Nazwa grupy" onChange={(e) => setGroupName(e.target.value)} value={groupName}
                     sx={{
                         width: "100%",
@@ -81,7 +89,7 @@ const Form = () => {
                         padding: "1rem 2rem"
                     }} />
             </FlexBetween>
-                <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
+                <Box borderRadius="5px" border={`1px solid ${medium}`} p="1rem">
                     <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false} 
                         onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
                     >
@@ -107,13 +115,14 @@ const Form = () => {
                         )}
                     </Dropzone>
                 </Box>
-            <FlexBetween>
+            <FlexBetween p="1.5rem 0" justifyContent="flex-end !important">
                 <Button disabled={!groupName && !isImage} onClick={handleGroup}
                     sx={{
                         color: palette.primary.dark, 
                         backgroundColor: palette.primary.main, 
                         borderRadius: "3rem",
-                        padding: "5px 15px",
+                        padding: "10px 20px",
+                        fontSize: "0.75rem",
                         "&:hover": { color: palette.primary.main }
                     }}>
                     Stwórz grupę
