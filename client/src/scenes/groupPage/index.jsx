@@ -25,12 +25,13 @@ const GroupPage = () => {
         const data = await response.json();
         setFounderId(data.founderId);
         setGroup(data);
-        const isMember = group.members.find((memberId) => memberId === _id);
+        const members = data.members;
+        const member = members.find((memberId) => memberId === _id);
+        setIsMember(member);
     };
 
     useEffect(() => {
         getGroup();
-        console.log(group);
     }, []);
 
     if (!group) return null;

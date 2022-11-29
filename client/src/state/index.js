@@ -8,6 +8,7 @@ const initialState = {
     friends: [],
     groups: [],
     members: [],
+    groupPosts: [],
 };
 
 export const authSlice = createSlice({
@@ -61,9 +62,19 @@ export const authSlice = createSlice({
             if (state.members) {
                 state.members = action.payload.members;
             }
-        }
+        },
+        setGroupPosts: (state, action) => {
+            state.groupPosts = action.payload.groupPosts;
+        },
+        setGroupPost: (state, action) => {
+            const updatedGroupPosts = state.groupPosts.map((groupPost) => {
+                if (groupPost._id === action.payload.groupPost._id) return action.payload.groupPost;
+                return groupPost;
+            });
+            state.groupPosts = updatedGroupPosts;
+        },
     }
 })
 
-export const { setMode, setLogin, setLogout, setFriends, setUserFriends, setPosts, setPost, setGroups, setGroup, setGroupMembers } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserFriends, setPosts, setPost, setGroups, setGroup, setGroupMembers, setGroupPosts, setGroupPost } = authSlice.actions;
 export default authSlice.reducer;

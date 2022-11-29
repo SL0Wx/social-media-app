@@ -56,6 +56,7 @@ const GroupWidget = ({ groupId, founderId }) => {
         );
         const members = await response.json();
         dispatch(setGroupMembers({ members: members}));
+        navigate(0);
     }
 
     useEffect(() => {

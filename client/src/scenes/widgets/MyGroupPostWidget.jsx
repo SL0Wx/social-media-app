@@ -14,7 +14,7 @@ import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "state";
+import { setGroupPosts } from "state";
 
 const MyGroupPostWidget = ({ groupId, userPicturePath }) => {
     const dispatch = useDispatch();
@@ -43,8 +43,8 @@ const MyGroupPostWidget = ({ groupId, userPicturePath }) => {
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
         });
-        const posts = await response.json();
-        dispatch(setPosts({ posts }));
+        const groupPosts = await response.json();
+        dispatch(setGroupPosts({ groupPosts }));
         setImage(null);
         setPost("");
     };
