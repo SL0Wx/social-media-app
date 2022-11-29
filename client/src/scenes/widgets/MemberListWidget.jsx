@@ -29,7 +29,6 @@ const MemberListWidget = ({ groupId }) => {
     if (!group) return null;
 
     members = group.members;
-    console.log(members);
 
     return (
         <WidgetWrapper>

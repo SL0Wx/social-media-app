@@ -15,6 +15,7 @@ const Group = ({ groupId, groupName, picturePath, founderId, members, topic }) =
     const medium = palette.neutral.medium;
  
     const isMember = members.find((memberId) => memberId === _id);
+
     return (
         <FlexBetween width="10rem">
             {isMember ? (

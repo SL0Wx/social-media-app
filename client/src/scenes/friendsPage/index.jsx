@@ -9,6 +9,7 @@ import MyFriend from "components/MyFriend";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import CountUp from 'react-countup';
 import Fuse from 'fuse.js';
+import WidgetWrapper from "components/WidgetWrapper";
 
 const FriendsPage = () => {
     const [user, setUser] = useState(null);
@@ -102,13 +103,15 @@ const FriendsPage = () => {
                         }} />
                     </Box>
                     <Box className="fgList">
+                      {friendResults.length > 0 ? (
+                      <WidgetWrapper>
                       <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
                       {friendResults.length > 0 ? friendResults.map(searchFriend => {
                         const {_id, picturePath, location, firstName, lastName } = searchFriend;
                          return (
                           <>
                           { _id !== user._id ? 
-                            <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
+                           <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
                             <MyFriend 
                               key={_id}
                               friendId={_id}
@@ -116,12 +119,14 @@ const FriendsPage = () => {
                               subtitle={location}
                               userPicturePath={picturePath}
                             />
-                          </Box>
+                           </Box>
                           : null}
                           </>
                          )
-                      }) : <FriendListWidget userId={user._id} pageType="friends"/> }
+                      }) : null }
                       </Box>
+                      </WidgetWrapper>
+                      ) : <FriendListWidget userId={user._id} pageType="friends"/>}
                     </Box>
                 </Box>
             </FlexBetween>

@@ -12,6 +12,7 @@ import Fuse from 'fuse.js';
 import Form from "./Form";
 import GroupListWidget from "scenes/widgets/GroupListWidget";
 import Group from "components/Group";
+import WidgetWrapper from "components/WidgetWrapper";
 
 const GroupsPage = () => {
     const [user, setUser] = useState(null);
@@ -22,8 +23,8 @@ const GroupsPage = () => {
     const token = useSelector((state) => state.token);
     const { _id } = useSelector((state) => state.user);
     const [groupResults, setGroupResults] = useState([]);
-    let members = [];
-
+    const [myGroups, setMyGroups] = useState([]);
+    
     const getUser = async () => {
       const response = await fetch(`http://localhost:3001/users/${_id}`, {
           method: "GET",
@@ -32,11 +33,27 @@ const GroupsPage = () => {
       const data = await response.json();
       setUser(data);
     };
-
+  
     useEffect(() => {
       getUser();
+      getGroups();
     }, [])
-    
+
+    const getGroups = async () => {
+      const responseGroup = await fetch("http://localhost:3001/groups", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const dataGroup = await responseGroup.json();
+      const groups = [];
+      dataGroup.map((group) => {
+        if (group.members.find((memberId) => memberId === _id)) {
+          groups.push(group);
+        }
+      })
+      setMyGroups(groups);
+    }
+
     const handleOnSearch = async({ currentTarget = {} }) => {
       const { value } = currentTarget;
       const searchQuery = value;
@@ -46,7 +63,15 @@ const GroupsPage = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       const dataGroup = await responseGroup.json();
-      const fuseGroup = new Fuse(dataGroup, {
+      const groups = [];
+      dataGroup.map((group) => {
+        if (group.members.find((memberId) => memberId === _id)) {
+          groups.push(group);
+        }
+      })
+      setMyGroups(groups);
+
+      const fuseGroup = new Fuse(myGroups, {
         keys: [
           'groupName',
         ],
@@ -54,6 +79,7 @@ const GroupsPage = () => {
       });
       
       const resultsGroup = fuseGroup.search(searchQuery);
+
       setGroupResults(searchQuery ? resultsGroup.map(result => result.item) : null);
       } else {
       setGroupResults([]);
@@ -82,7 +108,7 @@ const GroupsPage = () => {
                       </g>
                     </svg>
                     <Typography id="countNumber" fontSize="3rem" color={alt}>
-                      <CountUp start={0} end={1} duration={1.5} delay={0} />
+                      <CountUp start={0} end={myGroups.length} duration={1.5} delay={0} />
                     </Typography>
                 </Box>
                 <Box className="fgSearch">
@@ -99,10 +125,12 @@ const GroupsPage = () => {
                     }} />
                 </Box>
                 <Box className="fgList">
-                  <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
-                  {groupResults.length > 0 ? groupResults.map(searchGroup => {
+                  {groupResults.length > 0 ? (
+                    <WidgetWrapper>
+                    <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
+                    {groupResults.length > 0 ? groupResults.map(searchGroup => {
                     const {_id, picturePath, groupName,founderId, members, topic } = searchGroup;
-                     return (
+                      return (
                         <>
                         <Box flex="0 0 80%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
                         <Group 
@@ -114,9 +142,11 @@ const GroupsPage = () => {
                           topic={topic} />
                         </Box>
                         </>
-                     )
-                  }) : <GroupListWidget userId={_id} pageType="groups" /> }
-                  </Box>
+                      )
+                      }) : null }
+                      </Box>
+                    </WidgetWrapper>
+                  ) : <GroupListWidget userId={_id} pageType="groups"/>}
                 </Box>
             </Box>
             <Form />
