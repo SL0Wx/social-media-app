@@ -29,8 +29,8 @@ export const createGroupPost = async (req, res) => {
 /* READ */
 export const getGroupPosts = async (req, res) => {
     try {
-        const { groupId } = req.body;
-        const groupPost = await GroupPost.find({ groupId: groupId });
+        const { groupId } = req.params;
+        const groupPost = await GroupPost.find({ groupId }).sort({createdAt: -1});
         res.status(200).json(groupPost);
     } catch (err) {
         res.status(404).json({ error: err.message });

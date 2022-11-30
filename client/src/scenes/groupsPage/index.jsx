@@ -154,7 +154,8 @@ const GroupsPage = () => {
                           picturePath={picturePath} 
                           founderId={founderId} 
                           members={members} 
-                          topic={topic} />
+                          topic={topic} 
+                          pageType={"groups"}/>
                         </Box>
                         </>
                       )

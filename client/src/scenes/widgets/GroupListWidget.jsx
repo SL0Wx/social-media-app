@@ -43,7 +43,7 @@ const GroupListWidget = ({ userId, pageType }) => {
                 </Typography>
                 <Box display="flex" flexDirection="column" gap="1.5rem">
                   {myGroups.map((group) => (
-                    <Group groupId={group._id} groupName={group.groupName} picturePath={group.picturePath} founderId={group.founderId} members={group.members} topic={group.topic} />
+                    <Group groupId={group._id} groupName={group.groupName} picturePath={group.picturePath} founderId={group.founderId} members={group.members} topic={group.topic} pageType={"groups"}/>
                   ))}
                 </Box>
               </>
@@ -51,7 +51,7 @@ const GroupListWidget = ({ userId, pageType }) => {
             <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
               {myGroups.map((group) => (
                 <Box flex="0 0 80%" border="3px solid" padding="10px 15px" key={group._id} borderColor={palette.primary.main}  borderRadius="4rem">
-                  <Group groupId={group._id} groupName={group.groupName} picturePath={group.picturePath} founderId={group.founderId} members={group.members} topic={group.topic} />
+                  <Group groupId={group._id} groupName={group.groupName} picturePath={group.picturePath} founderId={group.founderId} members={group.members} topic={group.topic} pageType={"groups"}/>
                 </Box>
               ))}
             </Box>

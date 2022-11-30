@@ -11,17 +11,20 @@ import {
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
-  import { setPost } from "state";
+  import { useNavigate } from "react-router-dom";
+  import { setGroupPost } from "state";
   import { format } from 'date-fns';
+  import UserImage from "components/UserImage";
   
-  const PostWidget = ({
+  const GroupPostWidget = ({
     postId,
     postUserId,
+    groupName,
+    groupId,
     name,
     description,
-    location,
     picturePath,
-    userPicturePath,
+    groupPicturePath,
     likes,
     comments,
     createdAt,
@@ -32,13 +35,14 @@ import {
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length;
+    const navigate = useNavigate();
   
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
   
     const patchLike = async () => {
-      const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
+      const response = await fetch(`http://localhost:3001/groupPosts/${postId}/like`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,18 +50,39 @@ import {
         },
         body: JSON.stringify({ userId: loggedInUserId }),
       });
-      const updatedPost = await response.json();
-      dispatch(setPost({ post: updatedPost }));
+      const updatedGroupPost = await response.json();
+      dispatch(setGroupPost({ groupPost: updatedGroupPost }));
     };
   
     return (
       <WidgetWrapper m="2rem 0">
-        <Friend
-          friendId={postUserId}
-          name={name}
-          subtitle={format(new Date(createdAt), 'dd.MM.yyyy ● HH:mm')}
-          userPicturePath={userPicturePath}
-        />
+        <FlexBetween width="10rem">
+                <FlexBetween gap="1rem">
+                    <UserImage image={groupPicturePath} size="55px"/>
+                    <Box width="10rem">
+                    <Typography
+                        color={main}
+                        variant="h5"
+                        fontWeight="500"
+                        sx={{
+                        "&:hover": {
+                            color: palette.primary.main,
+                            cursor: "pointer",
+                        },
+                        }}
+                        onClick={() => {
+                        navigate(`/group/${groupId}`);
+                        navigate(0);
+                        }}
+                    >
+                        {groupName}
+                    </Typography>
+                    <Typography color={palette.neutral.medium} fontSize="0.75rem" width="20rem">
+                        {name} ● {format(new Date(createdAt), 'dd.MM.yyyy ● HH:mm')}
+                    </Typography>
+                  </Box>
+                </FlexBetween>
+        </FlexBetween>
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
         </Typography>
@@ -112,4 +137,4 @@ import {
     );
   };
   
-  export default PostWidget;
+  export default GroupPostWidget;

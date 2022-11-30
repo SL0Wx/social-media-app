@@ -7,6 +7,7 @@ import Sidebar from "components/Sidebar";
 import GroupWidget from "scenes/widgets/GroupWidget";
 import MemberListWidget from "scenes/widgets/MemberListWidget";
 import MyGroupPostWidget from "scenes/widgets/MyGroupPostWidget";
+import GroupPostsWidget from "scenes/widgets/GroupPostsWidget";
 
 const GroupPage = () => {
     const [group, setGroup] = useState(null);
@@ -50,7 +51,7 @@ const GroupPage = () => {
                     {isMember ? (
                         <MyGroupPostWidget groupId={groupId} userPicturePath={picturePath} />
                     ) : null}
-                    {/*<PostsWidget userId={userId} isProfile />*/}
+                    <GroupPostsWidget groupId={groupId} groupName={group.groupName} groupPicturePath={group.picturePath} />
                 </Box>
                 {isNonMobileScreens && <Box flexBasis="26%"></Box>}
             </Box>
