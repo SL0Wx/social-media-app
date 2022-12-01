@@ -4,13 +4,13 @@ import Navbar from "scenes/navbar";
 import Sidebar from "components/Sidebar";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import MyFriend from "components/MyFriend";
+import Friend from "components/Friend";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import CountUp from 'react-countup';
 import Fuse from 'fuse.js';
 import WidgetWrapper from "components/WidgetWrapper";
 
-const FriendsPage = () => {
+const ChatsPage = () => {
     const [user, setUser] = useState(null);
     const theme = useTheme();
     const alt = theme.palette.background.alt;
@@ -113,26 +113,22 @@ const FriendsPage = () => {
                       {friendResults.length > 0 ? friendResults.map(searchFriend => {
                         if (searchFriend !== undefined) {
                           const {_id, picturePath, location, firstName, lastName } = searchFriend;
-                         return (
-                          <>
-                          { _id !== user._id ? 
-                           <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
-                            <MyFriend 
-                              key={_id}
-                              friendId={_id}
-                              name={`${firstName} ${lastName}`}
-                              subtitle={location}
-                              userPicturePath={picturePath}
-                            />
-                           </Box>
-                          : null}
-                          </>
-                         )
+                            return (
+                                <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
+                                    <Friend 
+                                    key={_id}
+                                    friendId={_id}
+                                    name={`${firstName} ${lastName}`}
+                                    subtitle={location}
+                                    userPicturePath={picturePath}
+                                    pageType="chats" />
+                                </Box>
+                            )
                         }
                       }) : null }
                       </Box>
                       </WidgetWrapper>
-                      ) : <FriendListWidget userId={user._id} pageType="friends"/>}
+                      ) : <FriendListWidget userId={user._id} pageType="chats"/>}
                     </Box>
                 </Box>
             </FlexBetween>
@@ -140,4 +136,4 @@ const FriendsPage = () => {
     )
 }
 
-export default FriendsPage;
+export default ChatsPage;

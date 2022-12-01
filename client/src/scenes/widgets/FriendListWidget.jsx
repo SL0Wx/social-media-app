@@ -38,7 +38,7 @@ const FriendListWidget = ({ userId, pageType }) => {
                     </Typography>
                     <Box display="flex" flexDirection="column" gap="1.5rem" pb="10px">
                         {friends.map((friend) => (
-                            _id !== userId ? (
+                            _id !== userId || pageType === "chats" ? (
                                 <Friend 
                                     key={friend._id}
                                     friendId={friend._id}

@@ -5,13 +5,14 @@ import { useSelector } from "react-redux";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
+const Friend = ({ friendId, name, subtitle, userPicturePath, pageType }) => {
   const navigate = useNavigate();
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
   const token = useSelector((state) => state.token);
   const [friend, setFriend] = useState(null);
+  const [isChat, setIsChat] = useState(false);
 
   const getFriend = async () => {
     const response = await fetch(`http://localhost:3001/users/${friendId}`, {
@@ -28,7 +29,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   return (
     <FlexBetween>
-      <FlexBetween gap="1rem">
+      {pageType === "chats" ? (
+        <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box>
           <Typography
@@ -53,6 +55,31 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
+      ) : (
+        <FlexBetween gap="1rem" onClick={() => {
+          setIsChat(true);
+        }} style={{ cursor: "pointer" }}>
+        <UserImage image={userPicturePath} size="55px" />
+        <Box>
+          <Typography
+            color={main}
+            variant="h5"
+            fontWeight="500"
+            sx={{
+              "&:hover": {
+                color: palette.primary.main,
+                cursor: "pointer",
+              },
+            }}
+          >
+            {name}
+          </Typography>
+          <Typography color={medium} fontSize="0.75rem">
+            {subtitle}
+          </Typography>
+        </Box>
+      </FlexBetween>
+      )}
     </FlexBetween>
   );
 };
