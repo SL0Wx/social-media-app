@@ -45,11 +45,12 @@ const Form = () => {
 
    const handleGroup = async () => {
         const formData = new FormData();
+        console.log(image);
         formData.append("groupName", groupName);
         formData.append("founderId", _id);
         formData.append("topic", topic);
         formData.append("picture", image);
-        formData.append("picturePath", image.name);
+        formData.append("picturePath", image !== null ? image.name : "group_icon.svg");
 
         const response = await fetch(`http://localhost:3001/groups/create`, {
             method: "POST",

@@ -1,17 +1,26 @@
 import Message from "../models/Message.js";
-import User from "../models/User.js";
-import Chat from "../models/Chat.js";
 
-const sendMessage = async (req, res) => {
-    const { message, chatId } = req.body;
-
-    if (!message || !chatId) {
-        return res.send("Please provide all fields to send message");
+export const addMessage = async (req, res) => {
+    const { chatId, senderId, text } = req.body;
+    const message = new Message({
+        chatId,
+        senderId,
+        text,
+    });
+    try {
+        const result = await message.save();
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json(error);
     }
+}
 
-    let newMessage = {
-        sender: req.user.id,
-        message: message,
-        chatId: chatId,
-    };
+export const getMessages = async (req, res) => {
+    const { chatId } = req.params;
+    try {
+        const result = await Message.find({ chatId });
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 }

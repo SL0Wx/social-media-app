@@ -24,7 +24,7 @@ const registerSchema = yup.object().shape({
     email: yup.string().email("invalid email").required("Pole wymagane"),
     password: yup.string().required("Pole wymagane"),
     location: yup.string().required("Pole wymagane"),
-    picture: yup.string().required("Pole wymagane"),
+    picture: yup.string(),
 });
 
 const loginSchema = yup.object().shape({
@@ -64,7 +64,7 @@ const Form = () => {
         for (let value in values) {
             formData.append(value, values[value])
         }
-        formData.append('picturePath', values.picture.name);
+        formData.append('picturePath', values.picture.name !== undefined ? values.picture.name : "profile_icon.svg");
 
         const savedUserResponse = await fetch(
             "http://localhost:3001/auth/register",

@@ -433,3 +433,52 @@ form h2 {
   margin: auto;
   box-shadow: 0 0 50px 10px #515151;
 }
+
+.chatWidget {
+    min-height: 800px;
+    width: 100%;
+    max-width: 750px;
+    border-radius: 1.5rem;
+    margin: 2rem 0 0 0;
+    padding-bottom: 50px;
+    height: 800px;
+}
+
+.chatHeaderLeft {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.5rem 0 0 0;
+  color: white;
+}
+
+.chatHeaderRight {
+  height: 80px;
+  display: flex;
+  padding-left: 3.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0 1.5rem 0 0;
+  color: white;
+}
+
+.chatMainLeft {
+  height: 720px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 0 0 0 1.5rem;
+  color: white;
+  padding: 20px;
+}
+
+.chatMainRight {
+  height: 720px;
+  display: flex;
+  padding-left: 3.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0 0 1.5rem 0;
+  color: white;
+}

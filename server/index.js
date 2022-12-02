@@ -13,13 +13,13 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import groupRoutes from "./routes/groups.js";
 import groupPostRoutes from "./routes/groupPosts.js";
+import chatRoutes from "./routes/chats.js";
+import messageRoutes from "./routes/messages.js";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { createGroup } from "./controllers/groups.js";
 import { createGroupPost } from "./controllers/groupPosts.js";
 import { verifyToken } from "./middleware/auth.js";
-import { createServer } from "http";
-import { Server } from "socket.io";
 
 /* CONFIG */
 const __filename = fileURLToPath(import.meta.url);
@@ -61,6 +61,8 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/groups", groupRoutes);
 app.use("/groupPosts", groupPostRoutes);
+app.use("/chats", chatRoutes);
+app.use("/messages", messageRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
@@ -70,41 +72,3 @@ mongoose.connect(process.env.MONGO_URL, {
 }).then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 }).catch((error) => console.log(`${error} did not connect`));
-
-/* SOCKET.IO SETUP */
-const server = createServer(app);
-const io = new Server(server, {
-    pingTimeout: 60000,
-    cors: {
-        origin: "*",
-    },
-});
-
-io.on("connection", (socket) => {
-    socket.on("setup", (userData) => {
-        socket.join(userData._id);
-        socket.emit("connected");
-    });
-
-    socket.on("join-chat", (room) => {
-        socket.join(room);
-    });
-
-    socket.on("typing", (room) => socket.in(room).emit("typing"));
-    socket.on("stop-typing", (room) => socket.in(room).emit("stop-typing"));
-
-    socket.on("new-message", (newMessageRecevied) => {
-        let chat = newMessageRecevied.chat;
-        if (!chat.users) return console.log(`chat.users not defined`);
-
-        chat.users.forEach((user) => {
-            if (user._id === newMessageRecevied.sender._id) return;
-
-            socket.in(user._id).emit("message-recevied", new MessageRecevied);
-        });
-    });
-
-    socket.off("setup", () => {
-        socket.leave(userData._id);
-    });
-});
