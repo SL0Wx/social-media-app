@@ -38,7 +38,7 @@ const FriendListWidget = ({ userId, pageType }) => {
                     </Typography>
                     <Box display="flex" flexDirection="column" gap="1.5rem" pb="10px">
                         {friends.map((friend) => (
-                            _id !== userId || pageType === "chats" ? (
+                            _id !== userId ? (
                                 <Friend 
                                     key={friend._id}
                                     friendId={friend._id}
@@ -47,13 +47,24 @@ const FriendListWidget = ({ userId, pageType }) => {
                                     userPicturePath={friend.picturePath}
                                 />
                             ) : (
-                                <MyFriend 
-                                    key={friend._id}
-                                    friendId={friend._id}
-                                    name={`${friend.firstName} ${friend.lastName}`}
-                                    subtitle={friend.location}
-                                    userPicturePath={friend.picturePath}
-                                />
+                                pageType !== "chats" ? (
+                                    <MyFriend 
+                                        key={friend._id}
+                                        friendId={friend._id}
+                                        name={`${friend.firstName} ${friend.lastName}`}
+                                        subtitle={friend.location}
+                                        userPicturePath={friend.picturePath}
+                                    />
+                                ) : (
+                                    <Friend 
+                                        key={friend._id}
+                                        friendId={friend._id}
+                                        name={`${friend.firstName} ${friend.lastName}`}
+                                        subtitle={friend.location}
+                                        userPicturePath={friend.picturePath}
+                                        pageType="chats"
+                                    />
+                                )
                             )
                         ))}
                     </Box>

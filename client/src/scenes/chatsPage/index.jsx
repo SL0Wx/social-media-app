@@ -19,6 +19,7 @@ const ChatsPage = () => {
     const { _id } = useSelector((state) => state.user);
     const [friendResults, setFriendResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isChat, setIsChat] = useState(false);
 
     const getUser = async () => {
       const response = await fetch(`http://localhost:3001/users/${_id}`, {
@@ -109,26 +110,26 @@ const ChatsPage = () => {
                     <Box className="fgList">
                       {friendResults.length > 0 || searchQuery !== "" ? (
                       <WidgetWrapper>
-                      <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
-                      {friendResults.length > 0 ? friendResults.map(searchFriend => {
-                        if (searchFriend !== undefined) {
-                          const {_id, picturePath, location, firstName, lastName } = searchFriend;
-                            return (
-                                <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
-                                    <Friend 
-                                    key={_id}
-                                    friendId={_id}
-                                    name={`${firstName} ${lastName}`}
-                                    subtitle={location}
-                                    userPicturePath={picturePath}
-                                    pageType="chats" />
-                                </Box>
-                            )
-                        }
-                      }) : null }
-                      </Box>
+                        <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="space-evenly" width="100%">
+                          {friendResults.length > 0 ? friendResults.map(searchFriend => {
+                            if (searchFriend !== undefined) {
+                              const {_id, picturePath, location, firstName, lastName } = searchFriend;
+                                return (
+                                    <Box flex="0 0 45%" border="3px solid" padding="10px 15px" borderColor={theme.palette.primary.main} key={_id} borderRadius="4rem">
+                                        <Friend 
+                                        key={_id}
+                                        friendId={_id}
+                                        name={`${firstName} ${lastName}`}
+                                        subtitle={location}
+                                        userPicturePath={picturePath}
+                                        pageType="chats" />
+                                    </Box>
+                                )
+                            }
+                          }) : null }
+                        </Box>
                       </WidgetWrapper>
-                      ) : <FriendListWidget userId={user._id} pageType="chats"/>}
+                      ) : <FriendListWidget userId={user._id} pageType="chats" />}
                     </Box>
                 </Box>
             </FlexBetween>

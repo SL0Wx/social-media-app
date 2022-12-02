@@ -6,7 +6,7 @@ import FriendsPage from "./scenes/friendsPage";
 import GroupsPage from "./scenes/groupsPage";
 import GroupPage from "./scenes/groupPage";
 import ChatsPage from "./scenes/chatsPage";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";

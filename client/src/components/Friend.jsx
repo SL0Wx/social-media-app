@@ -29,7 +29,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, pageType }) => {
 
   return (
     <FlexBetween>
-      {pageType === "chats" ? (
+      {pageType !== "chats" ? (
         <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box>
