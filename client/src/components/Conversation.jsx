@@ -6,6 +6,7 @@ import UserImage from "./UserImage";
 const Conversation = ({chatData, currentUserId, online}) => {
   const [userData, setUserData] = useState(null);
   const token = useSelector((state) => state.token);
+  const theme = useTheme();
   
   const getUserData = async () => {
     const userId = chatData.members.find((id) => id !== currentUserId);
@@ -24,13 +25,13 @@ const Conversation = ({chatData, currentUserId, online}) => {
   if (!userData) return null;
 
   return (
-    <Box className="friend-conversation">
-      <Box>
+    <Box className="friend-conversation"  sx={{ "&:hover": { background: theme.palette.background.alt} }}>
+      <Box className="conversation-wrap">
         {online && <Box className="online-dot"></Box>}
-        <UserImage image={userData.picturePath} size="60"/>
+        <UserImage image={userData.picturePath} size="70"/>
         <Box>
-          <Typography style={{ fontSize: "1rem" }}>{userData.firstName} {userData.lastName}</Typography>
-          <Typography style={{ fontSize: "0.75rem" }}>{online ? "Online" : "Offline"}</Typography>
+          <Typography style={{ fontSize: "1.25rem" }}>{userData.firstName} {userData.lastName}</Typography>
+          <Typography style={{ fontSize: "0.85rem" }}>{online ? "Online" : "Offline"}</Typography>
         </Box>
       </Box>
     </Box>

@@ -2,12 +2,18 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector } from "react-redux";
 import { Box, Typography, InputBase, useTheme, Button } from "@mui/material";
 import UserImage from "./UserImage";
-import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
+import * as timeago from 'timeago.js';
+import TimeAgo from 'timeago-react';
+import pl from 'timeago.js/lib/lang/pl';
+
+timeago.register('pl', pl)
 
 const ChatBox = ({ chat, currentUserId, setSendMessage, receiveMessage }) => {
     const [userData, setUserData] = useState(null);
     const token = useSelector((state) => state.token);
+    const theme = useTheme();
+    const mode = (useTheme().palette.mode === 'dark');
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const scroll = useRef();
@@ -50,7 +56,7 @@ const ChatBox = ({ chat, currentUserId, setSendMessage, receiveMessage }) => {
     }
 
     const handleSend = async (e) => {
-        e.preventDefault();
+       if (typeof e !== "string") e.preventDefault();
         const message = {
             senderId: currentUserId,
             text: newMessage,
@@ -64,13 +70,12 @@ const ChatBox = ({ chat, currentUserId, setSendMessage, receiveMessage }) => {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "chatId": chat._id,
+                "chatId": message.chatId,
                 "senderId": currentUserId,
                 "text": newMessage,
             }),
         });
         const data = await response.json();
-        console.log(data);
         setMessages([...messages, data]);
         setNewMessage("");
 
@@ -86,26 +91,23 @@ const ChatBox = ({ chat, currentUserId, setSendMessage, receiveMessage }) => {
     
     return (
       <Box className="chatbox-container">
-         <Box className="chat-header">
-            <Box className="chat-person">
-                <Box>
-                    <UserImage image={userData.picturePath} size="30"/>
-                    <Box>
-                    <Typography style={{ fontSize: "1rem" }}>{userData.firstName} {userData.lastName}</Typography>
-                    </Box>
-                </Box>
-            </Box>
-         </Box>
          <Box className="chat-body">
            {messages.map((message) => (
-             <Box ref={scroll} className={message.senderId === currentUserId ? "message own" : "message"}>
-               <Typography>{message.text}</Typography>
-               <Typography>{format(message.createdAt)}</Typography>
+             <Box display="flex" flexDirection="row" justifyContent={message.senderId === currentUserId ? "flex-end" : "flex-start"}>
+               {message.senderId !== currentUserId && (
+                 <Box alignSelf="flex-end" margin="0 -10px -15px 0" zIndex="1">
+                 <UserImage image={userData.picturePath} size="25" />
+                 </Box>
+               )}
+               <Box ref={scroll} gap="0" className={message.senderId === currentUserId ? "message own" : "message"} backgroundColor={message.senderId === currentUserId ? theme.palette.primary.main : theme.palette.background.alt}>
+                 <Typography color={message.senderId === currentUserId || mode ? "white" : theme.palette.primary.main}>{message.text}</Typography>
+                 <Typography textAlign={message.senderId === currentUserId ? "right" : "left"} fontSize="0.7rem" color={message.senderId === currentUserId || mode ? "white" : theme.palette.primary.main}><TimeAgo datetime={message.createdAt} locale='pl' /></Typography>
+               </Box>
              </Box>
            ))}
          </Box>
-         <Box className="chat-sender">
-            <InputEmoji value={newMessage} onChange={handleChange} />
+         <Box className="chat-sender" backgroundColor={theme.palette.neutral.light} zIndex="2">
+            <InputEmoji value={newMessage} onEnter={handleSend} onChange={handleChange} placeholder="Napisz wiadomość"/>
             <Button className="send-button button" onClick={handleSend}>Wyślij</Button>
          </Box>
       </Box>

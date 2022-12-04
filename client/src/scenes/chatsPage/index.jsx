@@ -1,4 +1,4 @@
-import { Box, Typography, InputBase, useTheme } from "@mui/material";
+import { Box, Typography, InputBase, useTheme, IconButton } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Navbar from "scenes/navbar";
 import Sidebar from "components/Sidebar";
@@ -11,6 +11,8 @@ import ChatBox from "components/ChatBox";
 import Friend from "components/Friend";
 import Fuse from 'fuse.js';
 import WidgetWrapper from "components/WidgetWrapper";
+import UserImage from "components/UserImage";
+import { ArrowBack } from "@mui/icons-material";
 import { io } from "socket.io-client";
 
 const ChatsPage = () => {
@@ -22,13 +24,14 @@ const ChatsPage = () => {
     const mode = (useTheme().palette.mode === 'dark');
     const token = useSelector((state) => state.token);
     const { _id } = useSelector((state) => state.user);
-    const [friendResults, setFriendResults] = useState([]);
     const [isChat, setIsChat] = useState(false);
     const [friends, setFriends] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [sendMessage, setSendMessage] = useState(null);
     const [receiveMessage, setReceiveMessage] = useState(null);
+    const [currentFriend, setCurrentFriend] = useState(null);
+    const [friend, setFriend] = useState(null);
     
     const socket = useRef();
 
@@ -83,17 +86,27 @@ const ChatsPage = () => {
       const data = await response.json();
       setFriends(data);
     }
+    
+    const getCurrentFriend = async () => {
+      const current = friends.find((friend) => friend._id === currentFriend);
+      current !== undefined && current !== null ? setFriend(current) : setFriend(null);
+    }
 
     useEffect(() => {
       getUser();
       getUserFriends();
     }, [])
 
+    useEffect(() => {
+      getCurrentFriend();
+    }, [currentFriend])
+
     if (!user) return null;
     if (!friends) return null;
     if (!chats) return null;
-
+ 
     const createChat = async ({ friendId }) => {
+      
       const response = await fetch(`http://localhost:3001/chats/find/${user._id}/${friendId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -106,6 +119,10 @@ const ChatsPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
+        dispatch(setChats({ chats: [...chats, data] }));
+        setIsChat(false);
+      } else {
+        setCurrentChat(data);
       }
     }
 
@@ -121,14 +138,28 @@ const ChatsPage = () => {
             <Navbar />
             <FlexBetween style={{ justifyContent: "space-around", margin: "0 0 0 100px"}}>
                 <Box className="chatWidget" backgroundColor={alt}>
-                    <FlexBetween>
-                      <Box className="chatHeaderLeft" flexBasis="30%" backgroundColor="#849FFF">
-                        <Typography fontSize="1.5rem" fontWeight="bold">ZNAJOMI</Typography>
-                      </Box>
-                      <Box className="chatHeaderRight" flexBasis="70%" backgroundColor={theme.palette.primary.main}>
-                        <Typography fontSize="1.5rem" fontWeight="bold">CZATY</Typography>
-                      </Box>
-                    </FlexBetween>
+                    {!isChat ? (
+                      <FlexBetween>
+                       <Box className="chatHeaderLeft" flexBasis="30%" backgroundColor="#849FFF">
+                         <Typography fontSize="1.5rem" fontWeight="bold">ZNAJOMI</Typography>
+                       </Box>
+                       <Box className="chatHeaderRight" flexBasis="70%" backgroundColor={theme.palette.primary.main}>
+                         <Typography fontSize="1.5rem" fontWeight="bold">CZATY</Typography>
+                       </Box>
+                     </FlexBetween>
+                    ) : (
+                      <Box className="chatHeaderRightOpen" flexBasis="100%" backgroundColor={theme.palette.primary.main}>
+                         <Box display="flex" flexDirection="row" alignItems="center">
+                           <IconButton onClick={() => {setCurrentChat(null); setIsChat(false); setCurrentFriend(null);}}>
+                             <ArrowBack sx={{ height: "2.5rem", width: "2.5rem", color: "white"}}/>
+                           </IconButton>
+                           <Typography fontSize="1.5rem" fontWeight="bold">{friend !== undefined && friend !== null ? `${friend.firstName} ${friend.lastName}` : ""}</Typography>
+                          </Box>
+                          <Box border="3px solid" borderColor="white" borderRadius="10rem" width="56px" height="56px">
+                            <UserImage image={friend !== undefined && friend !== null ? friend.picturePath : ""} size="50"/>
+                          </Box>
+                       </Box>
+                    )}
                     <FlexBetween>
                       <Box className="chatMainLeft" flexBasis="30%" backgroundColor={theme.palette.background.alt}>
                         <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="flex-start" width="100%">
@@ -136,6 +167,7 @@ const ChatsPage = () => {
                               <Box flex="0 0 50%" key={friend._id} borderColor={theme.palette.primary.main} onClick={() => {
                                 setIsChat(true);
                                 createChat({ friendId: friend._id });
+                                setCurrentFriend(friend._id);
                               }}>
                                   <MyFriend 
                                       key={friend._id}
@@ -148,16 +180,19 @@ const ChatsPage = () => {
                           ))}
                         </Box>
                       </Box>
-                      <Box className="chatMainRight" flexBasis="70%" backgroundColor={theme.palette.neutral.light}>
+                      <Box className={isChat === false ? "chatMainRight" : "chatMainRightOpen"} flexBasis="70%" backgroundColor={theme.palette.neutral.light}>
                         {isChat === false ? (
-                          chats.map((chat) => (
+                          <Box className="Chat-list">
+                          {chats.map((chat) => (
                             <Box onClick={() => {
                               setCurrentChat(chat);
                               setIsChat(true);
+                              setCurrentFriend(chat.members.find((member) => member !== _id));
                             }}>
                               <Conversation chatData={chat} currentUserId={user._id} online={checkOnlineStatus(chat)}/>
                             </Box>
-                        ))) : (
+                        ))}
+                        </Box>) : (
                           <Box>
                             <ChatBox chat={currentChat} currentUserId={user._id} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
                           </Box>

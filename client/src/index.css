@@ -434,14 +434,16 @@ form h2 {
   box-shadow: 0 0 50px 10px #515151;
 }
 
+/* CHAT STYLES */
+
 .chatWidget {
-    min-height: 800px;
+    min-height: 700px;
     width: 100%;
     max-width: 750px;
     border-radius: 1.5rem;
     margin: 2rem 0 0 0;
     padding-bottom: 50px;
-    height: 800px;
+    height: 700px;
 }
 
 .chatHeaderLeft {
@@ -459,7 +461,17 @@ form h2 {
   padding-left: 3.5rem;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 0 1.5rem 0 0;
+  border-radius: 0rem 1.5rem 0 0;
+  color: white;
+}
+
+.chatHeaderRightOpen {
+  height: 80px;
+  display: flex;
+  padding: 0 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1.5rem 1.5rem 0 0;
   color: white;
 }
 
@@ -471,14 +483,185 @@ form h2 {
   border-radius: 0 0 0 1.5rem;
   color: white;
   padding: 20px;
+  overflow: scroll;
 }
 
 .chatMainRight {
   height: 720px;
+  border-radius: 0 0 1.5rem 0;
+  padding: 1.5rem;
+}
+
+.chatMainRightOpen {
+  height: 720px;
+  border-radius: 0 0 1.5rem 0;
+}
+
+.Chat {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22% auto;
+  gap: 1rem;
+}
+
+.Left-side-chat {
   display: flex;
-  padding-left: 3.5rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.Chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--cardColor);
+  border-radius: 1rem;
+  padding: 1rem;
+  height: auto;
+  min-height: 80vh;
+  overflow: scroll;
+}
+
+.Chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.conversation:hover {
+  background: #80808038;
+  cursor: pointer;
+}
+
+.conversation {
+  border-radius: 0.5rem;
+  padding: 10px;
+}
+
+.conversation > div {
+  position: relative;
+}
+
+.online-dot {
+  background-color: greenyellow;
+  border-radius: 50%;
+  margin-bottom: 50px;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+}
+
+.chatbox-empty-message {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  height: 670px;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  overflow: scroll;
+}
+
+.message {
+background: white;
+padding: 0.7rem;
+border-radius: 1rem 1rem 1rem 0;
+max-width: 28rem;
+width: fit-content;
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+.message>span:nth-child(2){
+  font-size: 0.7rem;
+  align-self: end;
+}
+
+.own {
+align-self: flex-end;
+border-radius: 1rem 1rem 0 1rem;
+background: #6284FF;
+}
+
+.chat-sender {
+  position: absolute;
+  width: 32.75rem;
+  display: flex;
+  justify-content: space-between;
+  height: 3.5rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.4rem 0 0;
+  border-radius: 1rem;
+  align-self: flex-end;
+}
+.chat-sender>input{
+  background: red;
+  height: 70%;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  flex:1  ;
+  font-size: 14px;
+  padding: 0px 15px 0px 15px;
+}
+.chat-sender>div:nth-of-type(1)
+{
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  cursor: default;
+}
+.chat-sender>div{
+  height: 70%;
+  padding: 0px 15px 0px 15px;
+}
+
+.chatbox-container {
+  height: 720px;
+  display: grid;
+  grid-template-rows: 14vh 58.5vh 13vh;
+}
+
+.react-input-emoji--input {
+  cursor: auto;
+  max-width: 330px;
+  max-height: 40px !important;
+}
+
+.send-button {
+  border: 2px solid #6284FF !important;
+}
+
+.conversation-wrap {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 0 0 1.5rem 0;
-  color: white;
+  gap: 0.5rem;
+}
+
+.friend-conversation {
+  transition: .1s;
+  padding: 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.friend-conversation:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.css-i62ta4 {
+  background: black !important;
+  border-radius: 100px;
+  height: 50px;
 }

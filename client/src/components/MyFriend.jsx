@@ -23,6 +23,8 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath}) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
+    setIsLoading(true);
+
     const response = await fetch(
       `http://localhost:3001/users/${_id}/${friendId}`,
       {
@@ -36,54 +38,15 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath}) => {
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
     window.location.reload();
+
+    setIsLoading(false);
   };
 
   return (
-    <FlexBetween>
-      {name !== undefined && subtitle !== undefined && subtitle !== "CHAT" && userPicturePath !== undefined ? (
-      <FlexBetween gap="1rem">
-        <UserImage image={userPicturePath} size="55px" />
-        <Box>
-          <Typography
-            color={main}
-            variant="h5"
-            fontWeight="500"
-            sx={{
-              "&:hover": {
-                color: palette.primary.main,
-                cursor: "pointer",
-              },
-            }}
-            onClick={() => {
-              navigate(`/profile/${friendId}`);
-              navigate(0);
-            }}
-          >
-            {name}
-          </Typography>
-          <Typography color={medium} fontSize="0.75rem">
-            {subtitle}
-          </Typography>
-        </Box>
-      </FlexBetween>
-      ) : null}
-      {_id !== friendId && subtitle !== "CHAT" ? (
-        <IconButton
-        onClick={() => patchFriend()}
-        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-      >
-        {isMyFriend || isFriend ? (
-          <PersonRemoveOutlined sx={{ color: primaryDark }} />
-        ) : (
-          <PersonAddOutlined sx={{ color: primaryDark }} />
-        )}
-      </IconButton>
-      ) : null}
-      {subtitle === "CHAT" ? (
-         <FlexBetween gap="1rem" justifyContent="flex-start !important">
-         <Box border="3px solid" borderColor={palette.primary.main} borderRadius="10rem">
-           <UserImage image={userPicturePath} size="40px" />
-         </Box>
+       <FlexBetween>
+       {name !== undefined && subtitle !== undefined && subtitle !== "CHAT" && userPicturePath !== undefined ? (
+       <FlexBetween gap="1rem">
+         <UserImage image={userPicturePath} size="55px" />
          <Box>
            <Typography
              color={main}
@@ -102,10 +65,47 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath}) => {
            >
              {name}
            </Typography>
+           <Typography color={medium} fontSize="0.75rem">
+             {subtitle}
+           </Typography>
          </Box>
        </FlexBetween>
-      ) : null}
-    </FlexBetween>
+       ) : null}
+       {_id !== friendId && subtitle !== "CHAT" ? (
+         <IconButton
+         onClick={() => patchFriend()}
+         sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+       >
+         {isMyFriend || isFriend ? (
+           <PersonRemoveOutlined sx={{ color: primaryDark }} />
+         ) : (
+           <PersonAddOutlined sx={{ color: primaryDark }} />
+         )}
+       </IconButton>
+       ) : null}
+       {subtitle === "CHAT" && (
+          <FlexBetween gap="1rem" justifyContent="flex-start !important">
+          <Box border="3px solid" borderColor={palette.primary.main} borderRadius="10rem">
+            <UserImage image={userPicturePath} size="40px" />
+          </Box>
+          <Box>
+            <Typography
+              color={main}
+              variant="h5"
+              fontWeight="500"
+              sx={{
+                "&:hover": {
+                  color: palette.primary.main,
+                  cursor: "pointer",
+                },
+              }}
+            >
+              {name}
+            </Typography>
+          </Box>
+        </FlexBetween>
+       )} 
+     </FlexBetween>
   );
 };
 
