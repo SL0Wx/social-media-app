@@ -9,6 +9,7 @@ const initialState = {
     groups: [],
     members: [],
     groupPosts: [],
+    chats: [],
 };
 
 export const authSlice = createSlice({
@@ -73,8 +74,11 @@ export const authSlice = createSlice({
             });
             state.groupPosts = updatedGroupPosts;
         },
+        setChats: (state, action) => {
+            state.chats = action.payload.chats;
+        },
     }
 })
 
-export const { setMode, setLogin, setLogout, setFriends, setUserFriends, setPosts, setPost, setGroups, setGroup, setGroupMembers, setGroupPosts, setGroupPost } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserFriends, setPosts, setPost, setGroups, setGroup, setGroupMembers, setGroupPosts, setGroupPost, setChats } = authSlice.actions;
 export default authSlice.reducer;
