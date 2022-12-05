@@ -41,17 +41,21 @@ const GroupPage = () => {
         <Box>
             <Sidebar />
             <Navbar />
-            <Box width="100%" padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center">
+            <Box width={isNonMobileScreens ? "100%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center" marginLeft="100px" >
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
                     <GroupWidget groupId={groupId} founderId={founderId} />
                     <Box m="2rem 0" />
                     <MemberListWidget groupId={groupId} />
                 </Box>
-                <Box flexBasis={isNonMobileScreens ? "42%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>
+                <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
                     {isMember ? (
-                        <MyGroupPostWidget groupId={groupId} userPicturePath={picturePath} />
+                        <Box mt={isNonMobileScreens ? "0" : "2rem"}>
+                          <MyGroupPostWidget groupId={groupId} userPicturePath={picturePath} />
+                        </Box>
                     ) : null}
-                    <GroupPostsWidget groupId={groupId} groupName={group.groupName} groupPicturePath={group.picturePath} />
+                    <Box mt={isNonMobileScreens && !isMember ? "-2rem" : "2rem"}>
+                        <GroupPostsWidget groupId={groupId} groupName={group.groupName} groupPicturePath={group.picturePath} />
+                    </Box>
                 </Box>
                 {isNonMobileScreens && <Box flexBasis="26%"></Box>}
             </Box>

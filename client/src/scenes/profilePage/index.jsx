@@ -33,13 +33,13 @@ const ProfilePage = () => {
         <Box>
             <Sidebar />
             <Navbar />
-            <Box width="100%" padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center">
+            <Box width={isNonMobileScreens ? "100%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center" margin="0 0 0 100px" >
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
                     <UserWidget userId={userId} picturePath={user.picturePath} />
                     <Box m="2rem 0" />
                     <FriendListWidget userId={userId} />
                 </Box>
-                <Box flexBasis={isNonMobileScreens ? "42%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>
+                <Box flexBasis={isNonMobileScreens ? "42%" : undefined} marginTop={isNonMobileScreens ? "-2rem" : "0"}>
                     <PostsWidget userId={userId} isProfile />
                 </Box>
                 {isNonMobileScreens && <Box flexBasis="26%"></Box>}

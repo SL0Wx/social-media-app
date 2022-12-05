@@ -2,7 +2,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "components/Friend";
 import MyFriend from "components/MyFriend";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends, setUserFriends } from "state";
 
@@ -37,7 +37,7 @@ const FriendListWidget = ({ userId, pageType }) => {
                         Znajomi
                     </Typography>
                     <Box display="flex" flexDirection="column" gap="1.5rem" pb="10px">
-                        {friends.map((friend) => (
+                        {userFriends.map((friend) => (
                             _id !== userId ? (
                                 <Friend 
                                     key={friend._id}

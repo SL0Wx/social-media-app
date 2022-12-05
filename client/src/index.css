@@ -646,7 +646,7 @@ background: #6284FF;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .friend-conversation {

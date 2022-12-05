@@ -21,8 +21,11 @@ import Galaxy from "components/Galaxy";
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("Pole wymagane"),
     lastName: yup.string().required("Pole wymagane"),
-    email: yup.string().email("invalid email").required("Pole wymagane"),
-    password: yup.string().required("Pole wymagane"),
+    email: yup.string().email("Niepoprawny email").required("Pole wymagane"),
+    password: yup.string().required("Pole wymagane").matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+        "Hasło musi składać się z conajmniej 8 znaków, w tym z jednej dużej i małej litery oraz cyfry"
+      ),
     location: yup.string().required("Pole wymagane"),
     picture: yup.string(),
 });
@@ -58,26 +61,33 @@ const Form = () => {
     const isRegister = pageType === "register";
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const formikRef = useRef();
+    const [confPassword, setConfPassword] = useState("");
+    const [isTheSame, setIsTheSame] = useState(true);
 
     const register = async (values, onSubmitProps) => {
-        const formData = new FormData();
-        for (let value in values) {
-            formData.append(value, values[value])
-        }
-        formData.append('picturePath', values.picture.name !== undefined ? values.picture.name : "profile_icon.svg");
-
-        const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
-            {
-                method: "POST",
-                body: formData,
+        if(values.password === confPassword) {
+            setIsTheSame(true);
+            const formData = new FormData();
+            for (let value in values) {
+                formData.append(value, values[value])
             }
-        );
-        const savedUser = await savedUserResponse.json();
-        onSubmitProps.resetForm();
+            formData.append('picturePath', values.picture.name !== undefined ? values.picture.name : "profile_icon.svg");
 
-        if (savedUser) {
-            setPageType("login");
+            const savedUserResponse = await fetch(
+                "http://localhost:3001/auth/register",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+            const savedUser = await savedUserResponse.json();
+            onSubmitProps.resetForm();
+
+            if (savedUser) {
+                setPageType("login");
+            }
+        } else {
+            setIsTheSame(false);
         }
     };
 
@@ -108,6 +118,10 @@ const Form = () => {
         if (isLogin) await login(values, onSubmitProps);
         if (isRegister) await register(values, onSubmitProps);
     };
+
+    const isSame = async(e) => {
+        setConfPassword(e.target.value);
+    }
 
     return (
         <>
@@ -335,6 +349,35 @@ const Form = () => {
                                                 style: { color: '#212121'},
                                             }}
                                         />
+                                        {isRegister && (
+                                            <>
+                                                <TextField 
+                                                    className="inputField"
+                                                    label="Powtórz Hasło" 
+                                                    type="password"
+                                                    onBlur={handleBlur}
+                                                    onChange={isSame}
+                                                    name="confPassword"
+                                                    size="small"
+                                                    sx={{ gridColumn: "span 4",
+                                                    "& .MuiOutlinedInput-root": {
+                                                    "& > fieldset": { borderColor: "#212121" },
+                                                    },}}
+                                                    InputProps={{
+                                                        style: {
+                                                            backgroundColor: "white",
+                                                            borderRadius: "8px",
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        style: { color: '#212121'},
+                                                    }}
+                                                />
+                                                {isTheSame === false && (
+                                                    <Typography>ZŁE HASŁA</Typography>
+                                                )}
+                                            </>
+                                        )}
                                     </Box>
 
                                     {/* BUTTONS */}

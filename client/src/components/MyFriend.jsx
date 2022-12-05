@@ -23,8 +23,6 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath}) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
-    setIsLoading(true);
-
     const response = await fetch(
       `http://localhost:3001/users/${_id}/${friendId}`,
       {
@@ -38,8 +36,6 @@ const MyFriend = ({ friendId, name, subtitle, userPicturePath}) => {
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
     window.location.reload();
-
-    setIsLoading(false);
   };
 
   return (
