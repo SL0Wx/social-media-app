@@ -17,6 +17,7 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import { motion, AnimatePresence } from 'framer-motion';
 import Galaxy from "components/Galaxy";
+import { themeSettings } from "theme";
 
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("Pole wymagane"),
@@ -126,7 +127,7 @@ const Form = () => {
     return (
         <>
             <Box width="100%" backgroundColor={palette.primary.nav} p="0.5rem 6%" textAlign="center" className="headerNav">
-                <FlexBetween maxWidth="1350px" margin="0 auto">
+                <FlexBetween maxWidth="1350px" margin="0 auto" flexDirection={isNonMobile ? "row" : "column"}>
                     <img className="logoImg" src="/assets/sfera_logo.svg" height="50px" onClick={() => { setPageType("welcome"); }}/>
                     <Box>
                         <button className="login" onClick={ () => { setPageType("login"); formikRef.current?.resetForm(); }}>ZALOGUJ SIĘ</button>
@@ -134,8 +135,8 @@ const Form = () => {
                     </Box>
                 </FlexBetween>
             </Box>
-            <Box width="100%" backgroundColor={isWelcome ? palette.background.default : (isLogin ? palette.background.default : palette.primary.main)}>
-            <motion.div animate={isHovered ? 'show' : 'hide'} variants={{
+            <Box overflow="hidden" height={isNonMobile ? "100vh" : "auto"} width="100%" backgroundColor={isWelcome ? palette.background.default : (isLogin ? palette.background.default : palette.primary.main)}>
+            <motion.div animate={isHovered ? 'hide' : 'show'} variants={{
                         hide: {
                           opacity: 0,
                         },
@@ -143,7 +144,7 @@ const Form = () => {
                           opacity: 1,
                         },
                       }}>
-            <svg id={isLogin ? "AsteroidsWrapLog" : "AsteroidsWrapReg"} width="1350" height="1350" viewBox="0 0 1350 1350" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg id={isLogin ? "AsteroidsWrapLog" : "AsteroidsWrapReg"} width="1350" height="1350" viewBox="0 0 1350 1350" fill="none" visibility={isWelcome ? "hidden" : "visible"} xmlns="http://www.w3.org/2000/svg">
                 <g id="Asteroids">
                 <path id="RockB" d="M1280.59 227.794C1299.93 245.501 1306.91 276.997 1296.68 301.38C1286.58 325.35 1258.86 342.081 1244.98 373.914C1230.56 406.033 1229.56 453.129 1208.4 476.396C1187.77 499.377 1147.11 498.118 1124.12 476.128C1100.85 453.598 1095.38 409.924 1071.8 379.624C1047.93 348.784 1006.37 331.446 994.602 305.243C983.25 279.168 1001.98 244.768 1030.71 230.607C1059.03 216.319 1097.34 222.271 1127.04 221.05C1156.32 219.702 1177 211.182 1203.12 208.406C1229.52 206.168 1261.24 210.086 1280.59 227.794Z" fill="#6284FF" fillOpacity="0.5"/>
                 <path id="RockB_2" d="M272.32 785.068C278.5 802.345 272.518 824.107 258.22 835.846C244.136 847.371 221.522 848.66 202.53 863.814C183.111 878.968 167.1 907.774 146.404 915.249C126.134 922.724 101.394 908.654 94.3621 887.537C87.3308 865.993 98.222 837.189 93.5393 810.738C88.8568 783.861 68.8134 759.549 70.1014 739.496C71.6026 719.655 94.4349 704.5 116.834 705.131C139.02 705.549 160.774 721.753 179.543 730.705C198.099 739.445 213.672 740.932 230.736 747.751C247.799 754.998 266.14 767.79 272.32 785.068Z" fill="#6284FF" fillOpacity="0.5"/>
@@ -173,7 +174,7 @@ const Form = () => {
                         }
                       }}>
                     <Box height="100vh" pt="75px">
-                        <Box  className="inputWrap" width={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : "80%"} height={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : "700px"} p="2rem" m="0 auto" borderRadius="50%" backgroundColor={isLogin ? palette.primary.main : palette.background.default}>
+                        <Box  className="inputWrap" width={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : "90vw"} height={isNonMobileScreens ? ( isLogin ? "600px" : "700px") : ( isLogin ? "400px" : "600px")} p="2rem" m="0 auto" borderRadius={isNonMobileScreens ? "50%" : "25px"} backgroundColor={isLogin ? palette.primary.main : palette.background.default}>
                             <Formik innerRef={formikRef} onSubmit={handleFormSubmit} initialValues={isLogin ? initialValuesLogin : initialValuesRegister} validationSchema={isLogin ? loginSchema : registerSchema}>
                             {({
                                 values,
@@ -409,7 +410,6 @@ const Form = () => {
                         <motion.div key={"welcome"} initial="hidden" exit="visible" variants={{
                                 visible: {
                                     scale: 25,
-                                    background: "transparent",
                                     transition: {
                                     duration: 0.8
                                     }
@@ -422,7 +422,7 @@ const Form = () => {
                                 }
                                 }}>
                             <div className="content">
-                                <div className="main">
+                                <div className="main" style={{ background: palette.background.default}}>
                                     <motion.div initial="hidden" animate="visible" variants={{
                                         hidden: {
                                             translateX: 50,
@@ -437,9 +437,11 @@ const Form = () => {
                                             }
                                         }
                                     }}>
-                                    <h1>
-                                        DOŁĄCZ <br /> DO NASZEGO <br /> WSZECHŚWIATA
-                                    </h1>
+                                    {isNonMobile ? (
+                                        <h1>DOŁĄCZ <br /> DO NASZEGO <br /> WSZECHŚWIATA</h1>
+                                    ) : (
+                                        <h1 style={{ fontSize: "4rem" }}>DOŁĄCZ <br /> DO NASZEGO <br /> WSZECH <br /> ŚWIATA</h1>
+                                    )}
                                     </motion.div>
                                     <motion.div initial="hidden" animate="visible" variants={{
                                         hidden: {
@@ -459,7 +461,9 @@ const Form = () => {
                                             }
                                         }
                                     }}>
-                                    <Galaxy />
+                                    {isNonMobileScreens && (
+                                        <Galaxy />
+                                    )}
                                     </motion.div>
                                 </div>
                             </div> 

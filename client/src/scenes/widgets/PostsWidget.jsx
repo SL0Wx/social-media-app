@@ -1,7 +1,10 @@
+import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
+import WidgetWrapper from 'components/WidgetWrapper';
+import FlexBetween from 'components/FlexBetween';
 
 const PostsWidget = ({ userId, isProfile = false }) => {
     const dispatch = useDispatch();
@@ -36,32 +39,44 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
     return (
         <>
-            {posts.map(
-                ({
-                    _id,
-                    userId,
-                    firstName,
-                    lastName,
-                    description,
-                    picturePath,
-                    userPicturePath,
-                    likes,
-                    comments,
-                    createdAt,
-                }) => (
-                    <PostWidget
-                        key={_id}
-                        postId={_id}
-                        postUserId={userId}
-                        name={`${firstName} ${lastName}`}
-                        description={description}
-                        picturePath={picturePath}
-                        userPicturePath={userPicturePath}
-                        likes={likes}
-                        comments={comments}
-                        createdAt={createdAt}
-                    />
-                )
+            {posts.length > 0 ? (
+                <>
+                    {posts.map(
+                        ({
+                            _id,
+                            userId,
+                            firstName,
+                            lastName,
+                            description,
+                            picturePath,
+                            userPicturePath,
+                            likes,
+                            comments,
+                            createdAt,
+                        }) => (
+                            <PostWidget
+                                key={_id}
+                                postId={_id}
+                                postUserId={userId}
+                                name={`${firstName} ${lastName}`}
+                                description={description}
+                                picturePath={picturePath}
+                                userPicturePath={userPicturePath}
+                                likes={likes}
+                                comments={comments}
+                                createdAt={createdAt}
+                            />
+                        )
+                    )}
+                </>
+            ) : (
+                <>
+                    <WidgetWrapper m="2rem 0">
+                        <FlexBetween gap="1.5rem">
+                            <Typography>Nie ma tu jeszcze żadnego posta :/</Typography>
+                        </FlexBetween>
+                    </WidgetWrapper>
+                </>
             )}
         </>
     )

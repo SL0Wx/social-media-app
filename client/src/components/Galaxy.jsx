@@ -3,6 +3,7 @@ import { useTheme } from "@mui/material";
 
 function Galaxy() {
   const mode = (useTheme().palette.mode === 'dark');
+  const theme = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

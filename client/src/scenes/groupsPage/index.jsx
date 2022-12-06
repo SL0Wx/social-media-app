@@ -95,7 +95,7 @@ const GroupsPage = () => {
         <Box>
         <Sidebar />
         <Navbar />
-        <FlexBetween style={{ justifyContent: "space-around", flexDirection: "column", margin: "0 0 0 100px" }}>
+        <FlexBetween style={{ justifyContent: "space-around !important", flexDirection: "column", margin: "0 0 0 100px", height: "auto"}}>
             <Box className="fgWidget" backgroundColor={alt}>
                 <Box className="fgHeader">
                     <Box className="fgSvg">
