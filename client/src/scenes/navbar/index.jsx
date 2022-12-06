@@ -12,11 +12,8 @@ import {
 } from "@mui/material";
 import {
   Search,
-  Message,
   DarkMode,
   LightMode,
-  Notifications,
-  Help,
   Menu,
   Close,
 } from "@mui/icons-material";
@@ -41,7 +38,6 @@ const Navbar = () => {
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
   const mode = (useTheme().palette.mode === 'dark');
 
@@ -88,7 +84,7 @@ const Navbar = () => {
   return (
     <FlexBetween marginLeft="96px" padding="1.3rem 3% 1.1rem 20px" backgroundColor={alt} position="sticky" top="0" zIndex="100">
       <FlexBetween gap="2rem">
-        <img className="homeLogo" src="/assets/sfera_txt_icon.svg"  onClick={() => navigate("/home")}/>
+        <img className="homeLogo" src="/assets/sfera_txt_icon.svg" alt="home"  onClick={() => navigate("/home")}/>
       </FlexBetween>
 
       {/* DESKTOP NAV */}
@@ -214,8 +210,6 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}

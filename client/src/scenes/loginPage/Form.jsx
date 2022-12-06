@@ -17,7 +17,6 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import { motion, AnimatePresence } from 'framer-motion';
 import Galaxy from "components/Galaxy";
-import { themeSettings } from "theme";
 
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("Pole wymagane"),
@@ -25,7 +24,7 @@ const registerSchema = yup.object().shape({
     email: yup.string().email("Niepoprawny email").required("Pole wymagane"),
     password: yup.string().required("Pole wymagane").matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-        "Hasło musi składać się z conajmniej 8 znaków, w tym z jednej dużej i małej litery oraz cyfry"
+        "Hasło musi składać się z conajmniej 8 znaków,\n w tym z jednej dużej i małej litery oraz cyfry"
       ),
     location: yup.string().required("Pole wymagane"),
     picture: yup.string(),
@@ -128,7 +127,7 @@ const Form = () => {
         <>
             <Box width="100%" backgroundColor={palette.primary.nav} p="0.5rem 6%" textAlign="center" className="headerNav">
                 <FlexBetween maxWidth="1350px" margin="0 auto" flexDirection={isNonMobile ? "row" : "column"}>
-                    <img className="logoImg" src="/assets/sfera_logo.svg" height="50px" onClick={() => { setPageType("welcome"); }}/>
+                    <img className="logoImg" src="/assets/sfera_logo.svg" alt="logo" height="50px" onClick={() => { setPageType("welcome"); }}/>
                     <Box>
                         <button className="login" onClick={ () => { setPageType("login"); formikRef.current?.resetForm(); }}>ZALOGUJ SIĘ</button>
                         <button className="register" onClick={() => { setPageType("register"); formikRef.current?.resetForm(); }}>ZAREJESTRUJ SIĘ</button>
@@ -336,7 +335,7 @@ const Form = () => {
                                             error={Boolean(touched.password) && Boolean(errors.password)}
                                             helperText={touched.password && errors.password}
                                             size="small"
-                                            sx={{ gridColumn: "span 4",
+                                            sx={{ gridColumn: "span 4", whiteSpace: "pre-wrap",
                                             "& .MuiOutlinedInput-root": {
                                               "& > fieldset": { borderColor: "#212121" },
                                             },}}
@@ -375,7 +374,7 @@ const Form = () => {
                                                     }}
                                                 />
                                                 {isTheSame === false && (
-                                                    <Typography>ZŁE HASŁA</Typography>
+                                                    <Typography>Złe Hasła</Typography>
                                                 )}
                                             </>
                                         )}

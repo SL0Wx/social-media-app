@@ -1,13 +1,5 @@
-import {
-    EditOutlined,
-    DeleteOutlined,
-    AttachFileOutlined,
-    GifBoxOutlined,
-    ImageOutlined,
-    MicOutlined,
-    MoreHorizOutlined,
-} from "@mui/icons-material";
-import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton, useMediaQuery } from "@mui/material";
+import { EditOutlined, DeleteOutlined, ImageOutlined, } from "@mui/icons-material";
+import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
 import UserImage from "components/UserImage";
@@ -16,7 +8,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 
-const MyPostWidget = ({ picturePath }) => {
+const MyPostWidget = ({ picturePath, pageType }) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
@@ -24,7 +16,6 @@ const MyPostWidget = ({ picturePath }) => {
     const { palette } = useTheme();
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
-    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
 
@@ -35,6 +26,9 @@ const MyPostWidget = ({ picturePath }) => {
         if (image) {
             formData.append("picture", image);
             formData.append("picturePath", image.name);
+        }
+        if (pageType === "profile") {
+            formData.append("profile", pageType);
         }
 
         const response = await fetch(`http://localhost:3001/posts`, {
