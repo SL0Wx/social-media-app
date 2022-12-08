@@ -1,6 +1,5 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
-import Comment from "../models/Comment.js";
 
 /* CREATE */
 export const createPost = async (req, res) => {
@@ -78,43 +77,26 @@ export const likePost = async (req, res) => {
     }
 }
 
-export const getComments = async (req, res) => {
-    try {
-        const { postId } = req.params;
-        const comments = await Comment.find({ postId: postId });
-
-        res.status(200).json(comments);
-    } catch (err) {
-        res.status(404).json({ error: err.message });
-    }
-}
-
 export const commentPost = async (req, res) => {
     try {
-        const { postId, userId } = req.params;
-        const { text } = req.body;
-        const newComment = new Comment({
-            userId,
-            postId,
-            text,
+        const { id } = req.params;
+        const { userId, firstName, lastName, picturePath, text } = req.body;
+        const post = await Post.findById(id);
+        post.comments.push({
+            userId: userId,
+            firstName: firstName,
+            lastName: lastName,
+            picturePath: picturePath,
+            text: text,
         });
-        await newComment.save();
+        const updatedPost = await Post.findByIdAndUpdate(
+            id,
+            { comments: post.comments },
+            { new: true },
+        );
 
-        res.status(200).json(newComment);
+        res.status(200).json(updatedPost);
     } catch (err) {
         res.status(409).json({ message: err.message });
-    }
-}
-
-export const pushComment = async (req, res) => {
-    try {
-        const { postId, commentId } = req.params;
-        const post = await Post.findById(postId);
-        post.comments.push(commentId);
-        await post.save();
-
-        res.status(200).json(post);
-    } catch (err) {
-        res.status(404).json({ error: err.message });
     }
 }

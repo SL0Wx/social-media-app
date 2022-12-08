@@ -64,5 +64,25 @@ export const likeGroupPost = async (req, res) => {
 }
 
 export const commentGroupPost = async (req, res) => {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
+        const { userId, firstName, lastName, picturePath, text } = req.body;
+        const groupPost = await GroupPost.findById(id);
+        groupPost.comments.push({
+            userId: userId,
+            firstName: firstName,
+            lastName: lastName,
+            picturePath: picturePath,
+            text: text,
+        });
+        const updatedGroupPost = await GroupPost.findByIdAndUpdate(
+            id,
+            { comments: groupPost.comments },
+            { new: true },
+        );
+
+        res.status(200).json(updatedGroupPost);
+    } catch (err) {
+        res.status(409).json({ message: err.message });
+    }
 }

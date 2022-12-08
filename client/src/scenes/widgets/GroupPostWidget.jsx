@@ -4,10 +4,8 @@ import {
     ThumbUp,
     ShareOutlined,
   } from "@mui/icons-material";
-  import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+  import { Box, Divider, IconButton, Typography, useTheme, InputBase, Button } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
-  import Friend from "components/Friend";
-  import MyFriend from "components/MyFriend";
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +28,9 @@ import {
     createdAt,
   }) => {
     const [isComments, setIsComments] = useState(false);
+    const [commentText, setCommentText] = useState("");
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
@@ -53,6 +53,26 @@ import {
       const updatedGroupPost = await response.json();
       dispatch(setGroupPost({ groupPost: updatedGroupPost }));
     };
+
+    const patchComment = async () => {
+      const response = await fetch(`http://localhost:3001/groupPosts/${postId}/comment`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          "userId": loggedInUserId,
+          "firstName": user.firstName,
+          "lastName": user.lastName,
+          "picturePath": user.picturePath,
+          "text": commentText,
+        }),
+      });
+      const updatedGroupPost = await response.json();
+      dispatch(setGroupPost({ groupPost: updatedGroupPost }));
+      setCommentText("");
+    }
   
     return (
       <WidgetWrapper m="2rem 0">
@@ -122,14 +142,50 @@ import {
         </FlexBetween>
         {isComments && (
           <Box mt="0.5rem">
+            <FlexBetween gap="1.5rem">
+              <UserImage image={user.picturePath} size={40} />
+              <InputBase placeholder="Napisz komentarz" onChange={(e) => setCommentText(e.target.value)} value={commentText}
+                  sx={{
+                      width: "100%",
+                      backgroundColor: palette.neutral.light,
+                      borderRadius: "2rem",
+                      padding: "0.5rem 1rem",
+                      margin: "1rem"
+                  }} />
+              <Button disabled={!commentText} onClick={patchComment}
+                    sx={{
+                        color: palette.primary.dark, 
+                        backgroundColor: palette.primary.main, 
+                        borderRadius: "3rem",
+                        padding: "0.5rem 1rem",
+                        "&:hover": { color: palette.primary.main }
+                    }}>
+                    Wyślij
+                </Button>
+            </FlexBetween>
             {comments.map((comment, i) => (
               <Box key={`${name}-${i}`}>
                 <Divider />
-                <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                  {comment}
-                </Typography>
+                  <FlexBetween padding="0.5rem">
+                    <Box>
+                      <FlexBetween>
+                        <UserImage image={comment.picturePath} size={25} />
+                        <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem", "&:hover": {
+                            color: palette.primary.main,
+                            cursor: "pointer"
+                          } }} onClick={() => navigate(`/profile/${comment.userId}`)}>
+                          {comment.firstName} {comment.lastName}
+                        </Typography>
+                      </FlexBetween>
+                    </Box>
+                    <Box>
+                      <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                        {comment.text}
+                      </Typography>
+                    </Box>
+                  </FlexBetween>
               </Box>
-            ))}
+            )).reverse()}
             <Divider />
           </Box>
         )}

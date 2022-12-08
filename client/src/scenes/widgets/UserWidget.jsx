@@ -59,7 +59,7 @@ const UserWidget = ({ userId, pageType }) => {
                             {firstName} {lastName}
                         </Typography>
                         {pageType !== "group" ? (
-                            <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length == 1 ? "Znajomy" : "Znajomych")}</Typography>
+                            <Typography color={medium}>{friends.length} {friends.length > 1 ? "Znajomych" : (friends.length === 1 ? "Znajomy" : "Znajomych")}</Typography>
                         ) : (
                             <Typography color={medium}>{location}</Typography>
                         )}
