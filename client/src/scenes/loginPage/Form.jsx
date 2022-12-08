@@ -1,12 +1,5 @@
 import { useState, useRef } from "react";
-import {
-    Box,
-    Button,
-    TextField,
-    useMediaQuery,
-    Typography,
-    useTheme,
-} from "@mui/material";
+import { Box, Button, TextField, useMediaQuery, Typography, useTheme } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -25,7 +18,7 @@ const registerSchema = yup.object().shape({
     password: yup.string().required("Pole wymagane").matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
         "Hasło musi składać się z conajmniej 8 znaków,\n w tym z jednej dużej i małej litery oraz cyfry"
-      ),
+    ),
     location: yup.string().required("Pole wymagane"),
     picture: yup.string(),
 });
