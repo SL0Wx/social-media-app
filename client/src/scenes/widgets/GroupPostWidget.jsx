@@ -166,24 +166,22 @@ import {
             {comments.map((comment, i) => (
               <Box key={`${name}-${i}`}>
                 <Divider />
-                  <FlexBetween padding="0.5rem">
-                    <Box>
-                      <FlexBetween>
-                        <UserImage image={comment.picturePath} size={25} />
-                        <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem", "&:hover": {
-                            color: palette.primary.main,
-                            cursor: "pointer"
-                          } }} onClick={() => navigate(`/profile/${comment.userId}`)}>
-                          {comment.firstName} {comment.lastName}
-                        </Typography>
-                      </FlexBetween>
-                    </Box>
-                    <Box>
-                      <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                        {comment.text}
-                      </Typography>
-                    </Box>
-                  </FlexBetween>
+                <FlexBetween padding="0.5rem" flexDirection="row !important" justifyContent="flex-start !important">
+                  <Box height="100%" display="flex" alignItems="center" >
+                    <UserImage image={comment.picturePath} size={30} />
+                  </Box>
+                  <Box>
+                    <Typography sx={{ fontSize: "0.75rem", color: palette.neutral.dark, mt: "0.5rem", pl: "1rem", "&:hover": {
+                          color: palette.primary.main,
+                          cursor: "pointer"
+                        } }} onClick={() => navigate(`/profile/${comment.userId}`)}>
+                        {comment.firstName} {comment.lastName}
+                    </Typography>
+                    <Typography sx={{ color: main, mb: "0.5rem", pl: "1rem" }}>
+                      {comment.text}
+                    </Typography>
+                  </Box>
+                </FlexBetween>
               </Box>
             )).reverse()}
             <Divider />

@@ -70,3 +70,22 @@ export const addRemoveFriend = async (req, res) => {
         res.status(404).json({ error: err.message });
     }
 };
+
+export const patchGallery = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { fileName } = req.body;
+        const user = await User.findById(id);
+
+        user.gallery.push(fileName);
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { gallery: user.gallery },
+            { new: true },
+        );
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(404).json({ error: err.message });
+    }
+}

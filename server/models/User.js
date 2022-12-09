@@ -34,6 +34,10 @@ const UserSchema = new mongoose.Schema(
             type: Array,
             default: []
         },
+        gallery: {
+            type: Array,
+            default: []
+        },
         location: String,
     }, 
     { timestamps: true }

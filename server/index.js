@@ -19,6 +19,7 @@ import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { createGroup } from "./controllers/groups.js";
 import { createGroupPost } from "./controllers/groupPosts.js";
+import { patchGallery } from "./controllers/users.js";
 import { verifyToken } from "./middleware/auth.js";
 
 /* CONFIG */
@@ -54,6 +55,7 @@ app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.post("/groups/create", verifyToken, upload.single("picture"), createGroup);
 app.post("/groupPosts/create", verifyToken, upload.single("picture"), createGroupPost);
+app.patch("/users/:id/gallery", verifyToken, upload.single("file"), patchGallery);
 
 /* ROUTES */
 app.use("/auth", authRoutes);

@@ -22,7 +22,7 @@ function Sidebar() {
             <SidebarIcon src="/assets/friends_icon.svg" title="Znajomi" route="/friendsPage" />
             <SidebarIcon src="/assets/groups_icon.svg" title="Grupy" route="/groupsPage" />
             <SidebarIcon src="/assets/chats_icon.svg" title="Czaty" route="/chatsPage" />
-            <SidebarIcon src="/assets/gallery_icon.svg" title="Galeria" />
+            <SidebarIcon src="/assets/gallery_icon.svg" title="Galeria" route="/galleryPage" />
         </Box>
     )
 }

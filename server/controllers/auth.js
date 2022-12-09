@@ -12,6 +12,7 @@ export const register = async (req, res) => {
             password,
             picturePath,
             friends,
+            gallery,
             location,
         } = req.body;
 
@@ -25,6 +26,7 @@ export const register = async (req, res) => {
             password: passwordHash,
             picturePath,
             friends,
+            gallery,
             location,
         });
         const savedUser = await newUser.save();

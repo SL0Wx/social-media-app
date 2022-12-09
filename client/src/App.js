@@ -6,7 +6,8 @@ import FriendsPage from "./scenes/friendsPage";
 import GroupsPage from "./scenes/groupsPage";
 import GroupPage from "./scenes/groupPage";
 import ChatsPage from "./scenes/chatsPage";
-import { useEffect, useMemo, useState } from "react";
+import GalleryPage from "scenes/galleryPage";
+import { useMemo} from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/profile/:userId" element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
             <Route path="/group/:groupId" element={isAuth ? <GroupPage /> : <Navigate to="/" />} />
             <Route path="/chatsPage" element={isAuth ? <ChatsPage /> : <Navigate to="/" />} />
+            <Route path="/galleryPage" element={isAuth ? <GalleryPage /> : <Navigate to="/" /> } />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

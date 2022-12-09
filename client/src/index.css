@@ -668,3 +668,23 @@ background: #6284FF;
   border-radius: 100px;
   height: 50px;
 }
+
+.galleryWidget {
+  min-height: 800px;
+  width: 100%;
+  max-width: 750px;
+  border-radius: 3rem;
+  margin: 2rem 0;
+  padding-bottom: 50px;
+}
+
+.galleryHeader {
+  border-radius: 3rem;
+  height: 400px;
+  position: relative;
+}
+
+.galleryList {
+  width: 100%;
+  margin: 0px;
+}
