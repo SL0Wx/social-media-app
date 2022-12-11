@@ -54,9 +54,17 @@ const GalleryWidget = ({ userId }) => {
 
     return (
     <Box>
-        <Box>
+        <Box className="videos">
             {gallery.map((name) => (
-                <Typography>{name}</Typography>
+                <>
+                {name !== "" ? (
+                   <video className="galleryVideo" controls>
+                       <source src={`http://localhost:3001/assets/${name}`}></source>
+                   </video>
+                ) : (
+                  <></>
+                )}       
+                </>
             ))}
         </Box>
         {isFile && (

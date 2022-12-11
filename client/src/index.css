@@ -10,7 +10,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: 0;
 }
 
 * {
@@ -669,22 +669,58 @@ background: #6284FF;
   height: 50px;
 }
 
+.chatFriendBox {
+  transition: 0.25s;
+}
+
+.chatFriendBox:hover {
+  transform: translateX(0.75rem);
+}
+
+
 .galleryWidget {
   min-height: 800px;
   width: 100%;
   max-width: 750px;
   border-radius: 3rem;
   margin: 2rem 0;
-  padding-bottom: 50px;
+  padding: 2rem 3rem 2rem 3rem;
 }
 
 .galleryHeader {
   border-radius: 3rem;
-  height: 400px;
+  margin-bottom: 2rem;
   position: relative;
 }
 
 .galleryList {
   width: 100%;
   margin: 0px;
+}
+
+.galleryVideo {
+  object-fit: cover;
+  width: 14rem;
+  height: 14rem;
+  border: 3px solid white;
+}
+
+.videos {
+  width: 100%;
+  overflow-x: scroll !important;
+  margin: 1rem 0;
+}
+
+.videos::-webkit-scrollbar {
+  width: 3px !important;
+  height: 10px;
+}
+
+.videos::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+.videos::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: white;
 }

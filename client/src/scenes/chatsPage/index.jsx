@@ -164,7 +164,7 @@ const ChatsPage = () => {
                       <Box className="chatMainLeft" flexBasis="30%" backgroundColor={theme.palette.background.alt}>
                         <Box display="flex" gap="1.5rem 0" flexWrap="wrap" justifyContent="flex-start" width="100%">
                           {friends.map((friend) => (
-                              <Box flex="0 0 50%" key={friend._id} borderColor={theme.palette.primary.main} onClick={() => {
+                              <Box className="chatFriendBox" flex="0 0 50%" key={friend._id} borderColor={theme.palette.primary.main} onClick={() => {
                                 setIsChat(true);
                                 createChat({ friendId: friend._id });
                                 setCurrentFriend(friend._id);

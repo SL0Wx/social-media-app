@@ -25,7 +25,7 @@ const GalleryPage = () => {
             <FlexBetween style={{ justifyContent: "space-around", margin: "0 0 0 100px"}}>
                 <Box className="galleryWidget" backgroundColor={alt}>
                     <Box className="galleryHeader">
-                        <Typography style={{ fontSize: "3rem",  }}>Galeria</Typography>
+                        <Typography style={{ fontSize: "3rem", fontWeight: "700" }}>Galeria</Typography>
                     </Box>
                     <Box className="galleryList">
                       <GalleryWidget userId={user._id} />
