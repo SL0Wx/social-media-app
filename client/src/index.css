@@ -684,12 +684,13 @@ background: #6284FF;
   max-width: 750px;
   border-radius: 3rem;
   margin: 2rem 0;
-  padding: 2rem 3rem 2rem 3rem;
+  padding: 2rem 2.4rem;
 }
 
 .galleryHeader {
   border-radius: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  padding-left: 20px;
   position: relative;
 }
 
@@ -703,24 +704,83 @@ background: #6284FF;
   width: 14rem;
   height: 14rem;
   border: 3px solid white;
+  margin-top: -0.5rem;
 }
 
-.videos {
+.galleryAudio {
+  object-fit: cover;
+  width: 14rem;
+  height: 14rem;
+  border: 3px solid white;
+  cursor: pointer;
+  background-image: url(../public/assets/Music.svg);
+  margin-top: -0.5rem;
+}
+
+.galleryImage {
+  object-fit: cover;
+  width: 14rem;
+  height: 14rem;
+  border: 3px solid white;
+  cursor: pointer;
+  margin-top: -0.5rem;
+}
+
+.galleryImageFull {
+  object-fit: cover;
+  width: 50%;
+  height: auto;
+  border: 3px solid white;
+  position: relative;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  z-index: 1;
+  cursor: pointer;
+      margin-top: -0.5rem;
+}
+
+.gallery {
   width: 100%;
   overflow-x: scroll !important;
   margin: 1rem 0;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
 }
 
-.videos::-webkit-scrollbar {
+.gallery::-webkit-scrollbar {
   width: 3px !important;
   height: 10px;
 }
 
-.videos::-webkit-scrollbar-track {
+.gallery::-webkit-scrollbar-track {
   border-radius: 5px;
 }
 
-.videos::-webkit-scrollbar-thumb {
+.gallery::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: white;
+}
+
+audio::-webkit-media-controls-enclosure {
+  background-color: white;
+  border-radius: 0;
+}
+
+audio::-webkit-media-controls-time-remaining-display {
+  display: none;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
 }

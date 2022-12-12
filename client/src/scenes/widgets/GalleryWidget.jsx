@@ -10,7 +10,9 @@ import Dropzone from "react-dropzone";
 
 const GalleryWidget = ({ userId }) => {
     const [user, setUser] = useState(null);
+    const [currentName, setCurrentName] = useState('');
     const [file, setFile] = useState(null);
+    const [toggleImageSize, setToggleImageSize] = useState(false);
     const [isFile, setIsFile] = useState(false);
     const theme = useTheme();
     const { palette } = useTheme();
@@ -54,13 +56,26 @@ const GalleryWidget = ({ userId }) => {
 
     return (
     <Box>
-        <Box className="videos">
+        <Box className="gallery">
             {gallery.map((name) => (
                 <>
                 {name !== "" ? (
-                   <video className="galleryVideo" controls>
-                       <source src={`http://localhost:3001/assets/${name}`}></source>
-                   </video>
+                   <>
+                    {name.split('.').pop() === "mp4" || name.split('.').pop() === "avi" || name.split('.').pop() === "mkv" ? (
+                        <video id="galleryItem" className="galleryVideo" controls>
+                            <source src={`http://localhost:3001/assets/${name}`}></source>
+                        </video>
+                    ) : (name.split('.').pop() === "jpg" || name.split('.').pop() === "jpeg" || name.split('.').pop() === "png") ? (
+                        <Box className={toggleImageSize && name === currentName ? "imageOverlay" : null}>
+                            <img id="galleryItem" className={toggleImageSize && name === currentName ? "galleryImageFull" : "galleryImage"} src={`http://localhost:3001/assets/${name}`} onClick={() => {setToggleImageSize(!toggleImageSize); setCurrentName(name)}}/>
+                        </Box>
+                    ) : (name.split('.').pop() === "mp3" || name.split('.').pop() === "wav" || name.split('.').pop() === "ogg") ? (
+                        <audio id="galleryItem" className="galleryAudio" controls controlsList="nodownload noplaybackrate">
+                            <source src={`http://localhost:3001/assets/${name}`}></source>
+                        </audio>
+                    ) : null    
+                    }
+                   </>
                 ) : (
                   <></>
                 )}       
