@@ -10,7 +10,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 0;
+  display: none;
 }
 
 * {
@@ -706,6 +706,16 @@ background: #6284FF;
   height: 14rem;
   border: 3px solid;
   margin-top: -0.5rem;
+  cursor: pointer;
+}
+
+.userGalleryVideo {
+  object-fit: cover;
+  width: 11rem;
+  height: 11rem;
+  border: 3px solid;
+  margin-top: -0.5rem;
+  cursor: pointer;
 }
 
 .galleryAudio {
@@ -713,7 +723,15 @@ background: #6284FF;
   width: 14rem;
   height: 14rem;
   border: 3px solid;
-  cursor: pointer;
+  background-image: url(../public/assets/Music.svg);
+  margin-top: -0.5rem;
+}
+
+.userGalleryAudio {
+  object-fit: cover;
+  width: 11rem;
+  height: 11rem;
+  border: 3px solid;
   background-image: url(../public/assets/Music.svg);
   margin-top: -0.5rem;
 }
@@ -722,6 +740,15 @@ background: #6284FF;
   object-fit: cover;
   width: 14rem;
   height: 14rem;
+  border: 3px solid;
+  cursor: pointer;
+  margin-top: -0.5rem;
+}
+
+.userGalleryImage {
+  object-fit: cover;
+  width: 11rem;
+  height: 11rem;
   border: 3px solid;
   cursor: pointer;
   margin-top: -0.5rem;
@@ -753,6 +780,17 @@ background: #6284FF;
   padding: 0.5rem 0;
 }
 
+.userGallery {
+  width: 100%;
+  height: auto;
+  overflow-x: scroll !important;
+  margin: 1rem 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+
 .gallery::-webkit-scrollbar {
   width: 3px !important;
   height: 10px;
@@ -770,6 +808,14 @@ background: #6284FF;
 audio::-webkit-media-controls-enclosure {
   background-color: white;
   border-radius: 0;
+}
+
+audio::-webkit-media-controls-panel {
+  padding: 1px;
+}
+
+audio::-webkit-media-controls-current-time-display {
+  display: none;
 }
 
 audio::-webkit-media-controls-time-remaining-display {

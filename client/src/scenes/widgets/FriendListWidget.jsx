@@ -30,7 +30,7 @@ const FriendListWidget = ({ userId, pageType }) => {
     }, []);
 
     return (
-        <WidgetWrapper >
+        <WidgetWrapper>
             {pageType !== "friends" ? (
                 <>
                     <Typography color={palette.neutral.dark} variant="h5" fontWeight="500" sx={{ mb: "1.5rem"}}>

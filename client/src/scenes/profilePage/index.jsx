@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -8,6 +8,8 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import GalleryWidget from "scenes/widgets/GalleryWidget";
+import WidgetWrapper from "components/WidgetWrapper";
 
 const ProfilePage = () => {
     const [user, setUser] = useState(null);
@@ -15,6 +17,7 @@ const ProfilePage = () => {
     const { _id, picturePath } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+    const { palette } = useTheme();
 
     const getUser = async () => {
         const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -49,7 +52,14 @@ const ProfilePage = () => {
                     )}
                     <PostsWidget userId={userId} isProfile />
                 </Box>
-                {isNonMobileScreens && <Box flexBasis="26%"></Box>}
+                <Box flexBasis={isNonMobileScreens ? "26%" : undefined} marginRight="100px">
+                    <WidgetWrapper>
+                        <Box>
+                            <Typography style={{ fontSize: "1.5rem", fontWeight: "500", color: palette.neutral.dark, padding: "1rem" }}>Galeria</Typography>
+                            <GalleryWidget userId={userId} pageType="profile" />
+                        </Box>
+                    </WidgetWrapper>
+                </Box>
             </Box>
         </Box>
     )
