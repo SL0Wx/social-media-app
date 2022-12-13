@@ -14,7 +14,7 @@ const HomePage = () => {
 
     return (
         <Box>
-            <Sidebar />
+            <Sidebar selected="explore"/>
             <Navbar />
             <Box ml="6rem" width={isNonMobileScreens ? "92%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="0.5rem" justifyContent="space-around">
                 <Box flexBasis={isNonMobileScreens ? "50%" : undefined} mt={isNonMobileScreens ? undefined : "2rem"}>

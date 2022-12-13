@@ -40,7 +40,7 @@ const Group = ({ groupId, groupName, picturePath, founderId, members, topic }) =
                         {groupName}
                     </Typography>
                     <Typography color={medium} fontSize="0.75rem">
-                        {topic} {members.length} członków
+                        {topic} - {members.length} {members.length > 1 ? "Członków" : (members.length == 1 ? "Członek" : "Członków")}
                     </Typography>
                   </Box>
                 </FlexBetween>

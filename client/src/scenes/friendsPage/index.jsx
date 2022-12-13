@@ -70,7 +70,7 @@ const FriendsPage = () => {
 
     return (
         <Box>
-            <Sidebar />
+            <Sidebar selected="friends"/>
             <Navbar />
             <FlexBetween style={{ justifyContent: "space-around", margin: "0 0 0 100px"}}>
                 <Box className="fgWidget" backgroundColor={alt}>

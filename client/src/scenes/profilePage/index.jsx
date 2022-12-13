@@ -33,7 +33,7 @@ const ProfilePage = () => {
 
     return (
         <Box>
-            <Sidebar />
+            <Sidebar selected="profile"/>
             <Navbar />
             <Box width={isNonMobileScreens ? "100%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center" margin="0 0 0 100px" >
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>

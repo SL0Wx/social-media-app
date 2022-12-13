@@ -134,7 +134,7 @@ const ChatsPage = () => {
 
     return (
         <Box>
-            <Sidebar />
+            <Sidebar selected="chats"/>
             <Navbar />
             <FlexBetween style={{ justifyContent: "space-around", margin: "0 0 0 100px"}}>
                 <Box className="chatWidget" backgroundColor={alt}>

@@ -39,7 +39,7 @@ const GroupPage = () => {
 
     return (
         <Box>
-            <Sidebar />
+            <Sidebar selected="groups"/>
             <Navbar />
             <Box width={isNonMobileScreens ? "100%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center" marginLeft="100px" >
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>

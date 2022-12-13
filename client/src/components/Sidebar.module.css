@@ -126,3 +126,39 @@
 .sidebar_menu_closed:hover ~ #Line_8 {
     fill: red;
 }
+
+.sidebar_icon_selected {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s;
+    border-radius: 15px;
+}
+
+.app_sidebar_open .sidebar_icon_selected {
+    width: 90%;
+    padding: 8px 0px 8px 15px;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    justify-content: flex-start;
+    text-align: right;
+}
+
+.app_sidebar_closed .sidebar_icon_selected {
+    margin: 5px 0;
+}
+
+.app_sidebar_closed .sidebar_icon_selected .sidebar_label {
+    display: none;
+    opacity: 0;
+}
+
+.app_sidebar_open .sidebar_icon_selected .sidebar_label {
+    display: block;
+    opacity: 1;
+    color: #6284FF;
+}
