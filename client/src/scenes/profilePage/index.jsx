@@ -40,9 +40,11 @@ const ProfilePage = () => {
             <Navbar />
             <Box width={isNonMobileScreens ? "100%" : "85%"} padding="2rem 6%" display={isNonMobileScreens ? "flex" : "block"} gap="2rem" justifyContent="center" margin="0 0 0 100px" >
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-                    <UserWidget userId={userId} picturePath={user.picturePath} />
-                    <Box m="2rem 0" />
-                    <FriendListWidget userId={userId} />
+                    <WidgetWrapper style={{ position: "sticky", top: "7rem", backgroundColor: "transparent", padding: "0"}}>
+                        <UserWidget userId={userId} picturePath={user.picturePath} />
+                            <Box m="2rem 0" />
+                        <FriendListWidget userId={userId} />
+                    </WidgetWrapper>
                 </Box>
                 <Box flexBasis={isNonMobileScreens ? "42%" : undefined} marginTop={isNonMobileScreens ? "-2rem" : "0"}>
                     {_id === userId && (
@@ -52,8 +54,8 @@ const ProfilePage = () => {
                     )}
                     <PostsWidget userId={userId} isProfile />
                 </Box>
-                <Box flexBasis={isNonMobileScreens ? "26%" : undefined} marginRight="100px">
-                    <WidgetWrapper>
+                <Box  position={isNonMobileScreens ? null : "sticky"} top={isNonMobileScreens ? null : "0"} flexBasis={isNonMobileScreens ? "26%" : undefined} marginRight={isNonMobileScreens ? "100px" : undefined}>
+                    <WidgetWrapper style={{ position: "sticky", top: "7rem" }}>
                         <Box>
                             <Typography style={{ fontSize: "1.5rem", fontWeight: "500", color: palette.neutral.dark, padding: "1rem" }}>Galeria</Typography>
                             <GalleryWidget userId={userId} pageType="profile" />

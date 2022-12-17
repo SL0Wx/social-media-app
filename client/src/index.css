@@ -724,6 +724,9 @@ background: #6284FF;
   height: 14rem;
   border: 3px solid;
   background-image: url(../public/assets/Music.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   margin-top: -0.5rem;
 }
 
@@ -733,6 +736,9 @@ background: #6284FF;
   height: 11rem;
   border: 3px solid;
   background-image: url(../public/assets/Music.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   margin-top: -0.5rem;
 }
 
@@ -740,6 +746,7 @@ background: #6284FF;
   object-fit: cover;
   width: 14rem;
   height: 14rem;
+  flex: 1 1 auto;
   border: 3px solid;
   cursor: pointer;
   margin-top: -0.5rem;
@@ -855,4 +862,14 @@ audio::-webkit-media-controls-time-remaining-display {
   backdrop-filter: blur(10px);
   z-index: 5;
   padding: 1rem 0;
+}
+
+#galleryItem {
+  width: 100% !important;
+  height: auto;
+}
+
+#galleryItemAudio {
+  width: 100% !important;
+  min-height: 24rem;
 }

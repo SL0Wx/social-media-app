@@ -1,4 +1,4 @@
-import { Box, Typography, InputBase, useTheme, IconButton, Button } from "@mui/material";
+import { Box, Typography, InputBase, useTheme, useMediaQuery, IconButton, Button } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { useSelector, useDispatch } from "react-redux";
 import { setGallery } from "state";
@@ -24,6 +24,7 @@ const GalleryWidget = ({ userId, pageType }) => {
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const gallery = useSelector((state) => state.gallery);
+    const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
     const getUser = async () => {
         const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -113,32 +114,44 @@ const GalleryWidget = ({ userId, pageType }) => {
         ) : null}
         <Box>
             <Box className={pageType === "profile" ? "userGallery" : "gallery"}>
-                {gallery.map((name) => (
+                <>
+                    {gallery.length > 1 ? (
+                        <>
+                            {gallery.map((name) => (
                     <>
                     {name !== "" ? (
                     <>
                         {name.split('.').pop() === "mp4" || name.split('.').pop() === "avi" || name.split('.').pop() === "mkv" ? (
                             <Box className={toggleSize && name === currentName ? "imageOverlay" : null}>
-                            <video id="galleryItem" style={{ borderColor: theme.palette.primary.nav }} className={toggleSize && name === currentName ? "galleryVideoFull" : pageType === "profile" ? "userGalleryVideo" : "galleryVideo"} controls controlsList="nodownload noplaybackrate" disablePictureInPicture onClick={() => {setToggleSize(!toggleSize); setCurrentName(name)}}>
+                            <video id={isNonMobileScreens ? undefined : "galleryItem"} style={{ borderColor: theme.palette.primary.nav }} className={toggleSize && name === currentName ? "galleryVideoFull" : pageType === "profile" ? "userGalleryVideo" : "galleryVideo"} controls controlsList="nodownload noplaybackrate" disablePictureInPicture onClick={() => {setToggleSize(!toggleSize); setCurrentName(name)}}>
                                 <source src={`http://localhost:3001/assets/${name}`}></source>
                             </video>
                             </Box>
                         ) : (name.split('.').pop() === "jpg" || name.split('.').pop() === "jpeg" || name.split('.').pop() === "png") ? (
                             <Box className={toggleSize && name === currentName ? "imageOverlay" : null}>
-                                <img id="galleryItem" style={{ borderColor: theme.palette.primary.nav }} className={toggleSize && name === currentName ? "galleryImageFull" : pageType === "profile" ? "userGalleryImage" : "galleryImage"} src={`http://localhost:3001/assets/${name}`} onClick={() => {setToggleSize(!toggleSize); setCurrentName(name)}}/>
+                                <img id={isNonMobileScreens ? undefined : "galleryItem"} style={{ borderColor: theme.palette.primary.nav }} className={toggleSize && name === currentName ? "galleryImageFull" : pageType === "profile" ? "userGalleryImage" : "galleryImage"} src={`http://localhost:3001/assets/${name}`} onClick={() => {setToggleSize(!toggleSize); setCurrentName(name)}}/>
                             </Box>
                         ) : (name.split('.').pop() === "mp3" || name.split('.').pop() === "wav" || name.split('.').pop() === "ogg") ? (
-                            <audio id="galleryItem" style={{ borderColor: theme.palette.primary.nav }} className={pageType === "profile" ? "userGalleryAudio" : "galleryAudio"} controls controlsList="nodownload noplaybackrate">
+                            <audio id={isNonMobileScreens ? undefined : "galleryItemAudio"} style={{ borderColor: theme.palette.primary.nav }} className={pageType === "profile" ? "userGalleryAudio" : "galleryAudio"} controls controlsList="nodownload noplaybackrate">
                                 <source src={`http://localhost:3001/assets/${name}`}></source>
                             </audio>
                         ) : null    
                         }
+                        </>
+                        ) : (
+                        <></>
+                        )}       
+                        </>
+                        ))}
                     </>
                     ) : (
-                    <></>
-                    )}       
-                    </>
-                ))}
+                       <Box backgroundColor={theme.palette.background.hover} width="100%" padding="2rem 1rem" borderRadius="10px" mr="15px">
+                        <FlexBetween gap="1.5rem">
+                            <Typography>Nie ma tu jeszcze żadnych multimediów :/</Typography>
+                        </FlexBetween>
+                       </Box>
+                    )}
+                </>
             </Box>
         </Box>
     </>
