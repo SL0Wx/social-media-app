@@ -152,7 +152,7 @@ import {
                     <Typography sx={{ fontSize: "0.75rem", color: palette.neutral.dark, mt: "0.5rem", pl: "1rem", "&:hover": {
                           color: palette.primary.main,
                           cursor: "pointer"
-                        } }} onClick={() => navigate(`/profile/${comment.userId}`)}>
+                        } }} onClick={() => { navigate(`/profile/${comment.userId}`); navigate(0) }}>
                         {comment.firstName} {comment.lastName}
                     </Typography>
                     <Typography sx={{ color: main, mb: "0.5rem", pl: "1rem" }}>
